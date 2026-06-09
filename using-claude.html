@@ -985,14 +985,14 @@
       <h3>Stay in the current chat when</h3>
       <ul>
         <li>
-          The conversation contains useful <em>thought history</em> — reasoning
-          that informed earlier decisions and might still be relevant.
-        </li>
-        <li>
-          The context is not yet strained; the model can still hold everything
+          The context is not yet strained — the model can still hold everything
           comfortably.
         </li>
-        <li>The next step is a direct continuation of the current work.</li>
+        <li>
+          After a <code>grill-me</code> session, if the conversation was short
+          and the plan is not super detailed, it is better to stay in the same
+          window and just switch the model to a cheaper one.
+        </li>
       </ul>
 
       <h3>Start a new window when</h3>
@@ -1002,28 +1002,21 @@
           is now resolved.
         </li>
         <li>
-          The next step is implementation, and you do not want the model
-          spending tokens re-processing old reasoning.
-        </li>
-        <li>
-          You planned in full Opus (1M context) and want to implement in Sonnet
-          — be mindful that Sonnet also has a 1M context window, but if your
-          planning session grew very large, distilling it into a handover doc
-          first keeps the implementation window clean.
+          You used OpenSpec with full Opus — open a new window and switch to
+          Sonnet, handing it the spec document as the opening prompt.
         </li>
       </ul>
 
       <div class="callout callout-warning">
-        <div class="callout-title">Context window mismatch</div>
+        <div class="callout-title">
+          Switching models after OpenSpec planning
+        </div>
         <p>
-          If you planned using full Opus (1M context) and switch to a model with
-          a smaller window, you cannot simply carry the whole conversation over.
-          Distil the planning session into a precise handover document first —
-          the decision made, the reasoning behind it, the constraints uncovered,
-          and the exact next steps — then open a new window with that document
-          as the opening prompt. This is not a concern with
-          <code>opusplan</code>, which handles the handoff automatically within
-          its 200K limit.
+          After planning in full Opus, do not carry the whole conversation into
+          the implementation window. Distill the session into a precise handover
+          document first — the decision made, the reasoning behind it, the
+          constraints uncovered, and the exact next steps — then open a new
+          window with Sonnet and use that document as the opening prompt.
         </p>
       </div>
 
