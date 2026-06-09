@@ -132,6 +132,17 @@
         border-bottom-color: rgba(42, 69, 160, 0.7);
       }
 
+      a code {
+        color: #4a6ec0;
+        border-bottom: 1.5px solid rgba(74, 110, 192, 0.6);
+        border-radius: 4px 4px 0 0;
+      }
+
+      a:hover code {
+        color: #2a45a0;
+        border-bottom-color: rgba(42, 69, 160, 0.9);
+      }
+
       code {
         font-family: "SF Mono", Menlo, "Courier New", monospace;
         font-size: 0.82em;
@@ -805,42 +816,66 @@
 
       <hr class="divider" />
 
-      <!-- ─── OPUSPLAN ────────────────────────────────────────────────────── -->
-      <h2>The <code>opusplan</code> Model in Claude Code</h2>
+      <!-- ─── MEDIUM COMPLEXITY ─────────────────────────────────────────── -->
+      <h2>Medium Complexity — <code>opusplan</code> + <code>grill-me</code></h2>
       <p>
-        Claude Code ships a built-in model shorthand called
-        <code>opusplan</code>. It automates the plan-then-implement handoff:
+        For changes that are too involved to state directly but don't require
+        capturing domain knowledge, select the <code>opusplan</code> model and
+        invoke
+        <a
+          href="https://www.aihero.dev/my-grill-me-skill-has-gone-viral"
+          target="_blank"
+          rel="noopener"
+          ><code>grill-me</code></a
+        >
+        from within plan mode. The two work as one: Opus researches the codebase
+        and thinks through the problem with you via the grilling dialogue, then
+        produces a plan. Once you approve it, <code>opusplan</code> switches to
+        Sonnet for implementation automatically — no manual model switching
+        needed.
       </p>
-      <ol>
+
+      <ol class="flow-steps">
         <li>
-          The <strong>planning phase</strong> runs on Opus — high-quality
-          reasoning over the problem.
+          <span
+            >Select the <code>opusplan</code> model and enter plan mode.</span
+          >
         </li>
         <li>
-          Once a plan is approved, Claude Code
-          <strong>automatically switches to Sonnet</strong> for implementation.
+          <span
+            >Invoke <code>grill-me</code>. Opus analyses the codebase and asks
+            clarifying questions — surfacing edge cases, hidden assumptions, and
+            failure modes. Your initial input can be rough.</span
+          >
+        </li>
+        <li>
+          <span
+            >Answer the questions. When the dialogue is done, Opus produces a
+            well-informed plan. Review and approve it.</span
+          >
+        </li>
+        <li>
+          <span
+            >Accept the plan. <code>opusplan</code> automatically hands off to
+            Sonnet for implementation.</span
+          >
         </li>
       </ol>
-      <p>
-        The tradeoff is the context window: <code>opusplan</code> caps at
-        <strong>200K tokens</strong>. This is enough for most day-to-day tasks,
-        but it becomes a limitation when:
-      </p>
-      <ul>
-        <li>You need to load a large codebase into context.</li>
-        <li>
-          Your planning conversation itself accumulates a lot of back-and-forth.
-        </li>
-        <li>
-          You are doing domain-specific work that requires extensive background
-          documentation — see OpenSpec below.
-        </li>
-      </ul>
+
+      <div class="callout callout-info">
+        <div class="callout-title">When this isn't enough</div>
+        <p>
+          <code>opusplan</code> caps at 200K tokens, which is enough for most
+          day-to-day planning. If the problem involves domain knowledge,
+          architectural trade-offs, or decisions that need to be understood
+          months from now, use OpenSpec instead.
+        </p>
+      </div>
 
       <hr class="divider" />
 
       <!-- ─── OPENSPEC ────────────────────────────────────────────────────── -->
-      <h2>OpenSpec — Domain-Specific Workflows</h2>
+      <h2>OpenSpec — Domain Knowledge &amp; Architecture</h2>
       <p>
         For work that has a strong domain component — custom business logic,
         non-obvious architectural constraints, decisions with long-term
@@ -881,9 +916,9 @@
       <ol class="flow-steps">
         <li>
           <span
-            >Open a fresh conversation using full Opus (not
-            <code>opusplan</code>) — 1M context gives you room to include
-            background docs, existing code, and long planning discussions.</span
+            >Open a fresh conversation using full Opus — 1M context gives you
+            room to include background docs, existing code, and long planning
+            discussions.</span
           >
         </li>
         <li>
@@ -904,71 +939,6 @@
             >Open a new window with Sonnet and hand it the spec. Sonnet
             implements the plan without burning expensive Opus tokens on routine
             code generation.</span
-          >
-        </li>
-      </ol>
-
-      <div class="callout callout-info">
-        <div class="callout-title">Why full Opus, not opusplan?</div>
-        <p>
-          <code>opusplan</code> has a 200K context limit. Domain-specific
-          workflows often require large context: existing code, design
-          documents, domain references, or extended planning dialogue. Running
-          on full Opus gives you the full 1M context window so nothing has to be
-          left out of the planning stage.
-        </p>
-      </div>
-
-      <hr class="divider" />
-
-      <!-- ─── NON-DOMAIN WORK ────────────────────────────────────────────── -->
-      <h2>Non-Domain Work — <code>grill-me</code> + Plan Mode</h2>
-      <p>
-        For complex changes that don't require preserving domain knowledge, skip
-        the full spec and use Claude Code's plan mode combined with the
-        <a
-          href="https://www.aihero.dev/my-grill-me-skill-has-gone-viral"
-          target="_blank"
-          rel="noopener"
-          ><code>grill-me</code> skill</a
-        >.
-      </p>
-
-      <h3>The <code>grill-me</code> skill</h3>
-      <p>
-        The <code>grill-me</code> skill, created by Matt Pocock, produces a much
-        better plan than going straight into plan mode alone. Rather than
-        requiring you to know exactly what you want up front, it analyses the
-        codebase and asks you the important questions — surfacing edge cases,
-        hidden assumptions, and failure modes <em>before</em> any plan is
-        written. Your initial input can be rough; the skill sharpens it through
-        dialogue.
-      </p>
-
-      <h3>Claude Code plan mode</h3>
-      <ol class="flow-steps">
-        <li>
-          <span
-            >Invoke <code>grill-me</code>. Claude analyses the code and asks
-            clarifying questions to surface what matters.</span
-          >
-        </li>
-        <li>
-          <span
-            >Answer the questions. Your responses don't need to be polished —
-            the skill works with uncertainty.</span
-          >
-        </li>
-        <li>
-          <span
-            >Enter plan mode. Claude uses the grilling session to produce a
-            well-informed plan.</span
-          >
-        </li>
-        <li>
-          <span
-            >Review and approve the plan, then exit plan mode. Sonnet
-            implements.</span
           >
         </li>
       </ol>
@@ -1055,16 +1025,8 @@
           </tr>
           <tr>
             <td>Complex, no domain knowledge to preserve</td>
-            <td><code>grill-me</code> → plan mode → implement</td>
-            <td><span class="badge badge-sonnet">Sonnet</span></td>
-          </tr>
-          <tr>
-            <td>Complex, moderate context, auto handoff</td>
-            <td><code>opusplan</code> model in Claude Code</td>
-            <td>
-              <span class="badge badge-opus">Opus</span> →
-              <span class="badge badge-sonnet">Sonnet</span>
-            </td>
+            <td><code>opusplan</code> + <code>grill-me</code> in plan mode</td>
+            <td><code>opusplan</code></td>
           </tr>
           <tr>
             <td>Complex, domain knowledge must be preserved</td>
@@ -1073,11 +1035,6 @@
               <span class="badge badge-opus">Opus</span> →
               <span class="badge badge-sonnet">Sonnet</span>
             </td>
-          </tr>
-          <tr>
-            <td>Context window strained after planning</td>
-            <td>Produce handover doc, open new window</td>
-            <td>Whichever fits</td>
           </tr>
         </tbody>
       </table>
