@@ -153,10 +153,16 @@
         color: #4a3820;
       }
 
+      .table-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 1rem 0 1.5rem;
+      }
+
       .model-table {
         width: 100%;
         border-collapse: collapse;
-        margin: 1rem 0 1.5rem;
+        margin: 0;
         font-size: 0.875rem;
         font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
       }
@@ -321,6 +327,7 @@
         that is capable enough for the job.
       </p>
 
+      <div class="table-scroll">
       <table class="model-table">
         <thead>
           <tr>
@@ -363,6 +370,7 @@
           </tr>
         </tbody>
       </table>
+      </div>
 
       <div class="callout callout-warning">
         <div class="callout-title">Never use Opus to write code</div>
@@ -1006,6 +1014,7 @@
       <!-- ─── SUMMARY ────────────────────────────────────────────────────── -->
       <h2>Quick Reference</h2>
 
+      <div class="table-scroll">
       <table class="model-table">
         <thead>
           <tr>
@@ -1038,6 +1047,7 @@
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   </body>
 </html>
