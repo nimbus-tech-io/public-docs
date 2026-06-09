@@ -1,0 +1,1092 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Using Claude Effectively</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family:
+          "Palatino Linotype", "Palatino", "Book Antiqua", Georgia, serif;
+        font-size: 17px;
+        line-height: 1.75;
+        color: #2d2a26;
+        background-color: #f5f0e8;
+        background-image:
+          radial-gradient(
+            ellipse at 20% 0%,
+            rgba(210, 195, 170, 0.45) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 100%,
+            rgba(195, 185, 160, 0.3) 0%,
+            transparent 55%
+          );
+        min-height: 100vh;
+        padding: 3rem 1.5rem 5rem;
+      }
+
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        background: rgba(252, 248, 240, 0.85);
+        border: 1px solid rgba(200, 188, 165, 0.6);
+        border-radius: 10px;
+        padding: 3rem 3.5rem;
+        box-shadow:
+          0 1px 3px rgba(100, 85, 60, 0.07),
+          0 6px 24px rgba(100, 85, 60, 0.08);
+      }
+
+      h1 {
+        font-family:
+          "Avenir Next", "Avenir", "Nunito", "Trebuchet MS", sans-serif;
+        font-size: 2.1rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #1e1b17;
+        margin-bottom: 0.45rem;
+        line-height: 1.2;
+      }
+
+      .subtitle {
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+        color: #7a6f60;
+        font-size: 0.95rem;
+        margin-bottom: 3rem;
+        letter-spacing: 0.01em;
+      }
+
+      h2 {
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: #1e1b17;
+        margin-top: 2.8rem;
+        margin-bottom: 0.85rem;
+        padding-bottom: 0.45rem;
+        border-bottom: 1px solid #d6cbb8;
+      }
+
+      h3 {
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        margin-top: 1.7rem;
+        margin-bottom: 0.55rem;
+        color: #7a6f60;
+      }
+
+      p {
+        margin-bottom: 0.9rem;
+        color: #2d2a26;
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+        font-size: 0.97rem;
+      }
+
+      ul,
+      ol {
+        padding-left: 1.5rem;
+        margin-bottom: 0.9rem;
+      }
+
+      li {
+        margin-bottom: 0.4rem;
+        color: #2d2a26;
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+        font-size: 0.97rem;
+      }
+
+      strong {
+        color: #1e1b17;
+      }
+      em {
+        font-style: italic;
+        color: #4a4238;
+      }
+
+      a {
+        color: #4a6ec0;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(74, 110, 192, 0.35);
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+
+      a:hover {
+        color: #2a45a0;
+        border-bottom-color: rgba(42, 69, 160, 0.7);
+      }
+
+      code {
+        font-family: "SF Mono", Menlo, "Courier New", monospace;
+        font-size: 0.82em;
+        background: rgba(200, 188, 165, 0.28);
+        border: 1px solid rgba(180, 165, 140, 0.5);
+        border-radius: 4px;
+        padding: 0.15em 0.45em;
+        color: #4a3820;
+      }
+
+      .model-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0 1.5rem;
+        font-size: 0.875rem;
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+      }
+
+      .model-table th {
+        text-align: left;
+        padding: 0.55rem 0.8rem;
+        background: rgba(200, 188, 165, 0.3);
+        border: 1px solid rgba(190, 175, 150, 0.5);
+        font-weight: 600;
+        color: #5a5040;
+        font-size: 0.78rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .model-table td {
+        padding: 0.55rem 0.8rem;
+        border: 1px solid rgba(190, 175, 150, 0.4);
+        color: #2d2a26;
+        vertical-align: middle;
+      }
+
+      .model-table tr:nth-child(even) td {
+        background: rgba(200, 188, 165, 0.12);
+      }
+
+      .model-table tr:hover td {
+        background: rgba(200, 188, 165, 0.22);
+      }
+
+      .callout {
+        border-radius: 7px;
+        padding: 1rem 1.25rem;
+        margin: 1.3rem 0;
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+        font-size: 0.93rem;
+      }
+
+      .callout p {
+        font-family: inherit;
+        font-size: inherit;
+        color: inherit;
+        margin-bottom: 0;
+      }
+
+      .callout-warning {
+        background: rgba(240, 200, 130, 0.2);
+        border-left: 3px solid #c8860a;
+      }
+
+      .callout-warning .callout-title {
+        font-weight: 700;
+        color: #8a5c00;
+        margin-bottom: 0.35rem;
+      }
+
+      .callout-tip {
+        background: rgba(140, 190, 155, 0.18);
+        border-left: 3px solid #3a9060;
+      }
+
+      .callout-tip .callout-title {
+        font-weight: 700;
+        color: #236040;
+        margin-bottom: 0.35rem;
+      }
+
+      .callout-info {
+        background: rgba(140, 165, 220, 0.16);
+        border-left: 3px solid #4a6ec0;
+      }
+
+      .callout-info .callout-title {
+        font-weight: 700;
+        color: #2a45a0;
+        margin-bottom: 0.35rem;
+      }
+
+      .badge {
+        display: inline-block;
+        font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+        font-size: 0.68em;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border-radius: 3px;
+        padding: 0.18em 0.5em;
+        vertical-align: middle;
+        margin-left: 0.3em;
+      }
+
+      .badge-opus {
+        background: rgba(180, 145, 240, 0.2);
+        color: #5a20b0;
+        border: 1px solid rgba(160, 120, 210, 0.35);
+      }
+      .badge-sonnet {
+        background: rgba(100, 170, 230, 0.2);
+        color: #1a5a9a;
+        border: 1px solid rgba(80, 150, 210, 0.35);
+      }
+      .badge-haiku {
+        background: rgba(100, 185, 130, 0.2);
+        color: #1a6a40;
+        border: 1px solid rgba(80, 165, 110, 0.35);
+      }
+
+      .flow-steps {
+        list-style: none;
+        padding-left: 0;
+        font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+        font-size: 0.95rem;
+        counter-reset: step;
+      }
+
+      .flow-steps li {
+        counter-increment: step;
+        display: grid;
+        grid-template-columns: 1.65rem 1fr;
+        gap: 0.85rem;
+        align-items: start;
+        margin-bottom: 0.7rem;
+      }
+
+      .flow-steps li::before {
+        content: counter(step);
+        width: 1.65rem;
+        height: 1.65rem;
+        border-radius: 50%;
+        background: #3a3020;
+        color: #f5f0e8;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: grid;
+        place-items: center;
+        margin-top: 0.18rem;
+      }
+
+      .flow-steps li > * {
+        min-width: 0;
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid #d6cbb8;
+        margin: 2.6rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Using Claude Effectively</h1>
+      <p class="subtitle">
+        A guide to model selection, planning workflows, and context management.
+      </p>
+
+      <!-- ─── MODEL OVERVIEW ─────────────────────────────────────────────── -->
+      <h2>Model Overview</h2>
+      <p>
+        Three models, three price tiers, clear roles. Pick the cheapest model
+        that is capable enough for the job.
+      </p>
+
+      <table class="model-table">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Model ID</th>
+            <th>Context</th>
+            <th>Input&nbsp;$/1M</th>
+            <th>Output&nbsp;$/1M</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Claude Opus 4.8 <span class="badge badge-opus">Opus</span></td>
+            <td><code>claude-opus-4-8</code></td>
+            <td>1M</td>
+            <td>$5.00</td>
+            <td>$25.00</td>
+            <td>Planning, architecture, specs</td>
+          </tr>
+          <tr>
+            <td>
+              Claude Sonnet 4.6 <span class="badge badge-sonnet">Sonnet</span>
+            </td>
+            <td><code>claude-sonnet-4-6</code></td>
+            <td>1M</td>
+            <td>$3.00</td>
+            <td>$15.00</td>
+            <td>Implementation, everyday work</td>
+          </tr>
+          <tr>
+            <td>
+              Claude Haiku 4.5 <span class="badge badge-haiku">Haiku</span>
+            </td>
+            <td><code>claude-haiku-4-5</code></td>
+            <td>200K</td>
+            <td>$1.00</td>
+            <td>$5.00</td>
+            <td>Fast, cheap, simple tasks</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warning">
+        <div class="callout-title">Never use Opus to write code</div>
+        <p>
+          Opus costs up to 5&times; more per token than Sonnet. Its purpose is
+          to think through problems and produce plans that cheaper models can
+          execute. Using Opus to implement code is wasteful and offers no
+          meaningful quality gain for routine engineering work. Once a plan
+          exists, switch to Sonnet or Haiku.
+        </p>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- ─── DECISION CHART ───────────────────────────────────────────────── -->
+      <h2>How to Approach a Change</h2>
+      <p>
+        Use this chart to pick the right workflow before you write a single
+        prompt.
+      </p>
+
+      <style>
+        .fc-wrap {
+          margin: 1.8rem 0 0.5rem;
+          display: flex;
+          justify-content: center;
+        }
+        .fc-wrap svg {
+          max-width: 100%;
+          height: auto;
+          overflow: visible;
+        }
+        .fc-wrap a {
+          text-decoration: none;
+        }
+      </style>
+
+      <div class="fc-wrap">
+        <!--
+      Canvas: 600 wide × 580 tall
+      Centre x = 300
+
+      Layout (y positions of centres):
+        Start pill          y=30
+        Q1 diamond          cy=120  (half-height=50, so top=70 bottom=170)
+        Q1→left hline       y=120, x: 300 → 100
+        Q1→right hline      y=120, x: 300 → 500
+        "No" label left     x=175, y=108
+        "Yes" label right   x=425, y=108
+        Left vline down     x=100, y=120→200
+        Right vline down    x=500, y=120→220
+        Left outcome box    x=30..170  y=200..280
+        Q2 diamond          cx=500 cy=295 (half-height=55)
+        Q2→left hline       y=295, x: 500 → 340
+        Q2→right hline      y=295, x: 500 → 660 (clipped)
+        "No" label          x=395, y=283
+        "Yes" label         x=565, y=283
+        Left vline Q2       x=340, y=295→375
+        Right vline Q2      x=660→ but we keep it inside 600, use x=570
+        grill-me box        x=270..410 y=375..460
+        openspec box        x=430..570 y=375..460
+    -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 620 590"
+          width="620"
+          height="590"
+          font-family="'Avenir Next', Avenir, 'Trebuchet MS', sans-serif"
+        >
+          <defs>
+            <marker
+              id="arr"
+              markerWidth="8"
+              markerHeight="8"
+              refX="6"
+              refY="3"
+              orient="auto"
+            >
+              <path d="M0,0 L0,6 L8,3 z" fill="#9a8a72" />
+            </marker>
+          </defs>
+
+          <!-- ── START pill ── -->
+          <rect x="238" y="14" width="104" height="32" rx="16" fill="#3a3020" />
+          <text
+            x="290"
+            y="35"
+            text-anchor="middle"
+            fill="#f5f0e8"
+            font-size="13"
+            font-weight="700"
+            letter-spacing="0.5"
+          >
+            START
+          </text>
+
+          <!-- line: Start → Q1 -->
+          <line
+            x1="290"
+            y1="46"
+            x2="290"
+            y2="72"
+            stroke="#9a8a72"
+            stroke-width="2"
+            marker-end="url(#arr)"
+          />
+
+          <!-- ── Q1 diamond: Is the change complex? ── -->
+          <!-- diamond: centre (290,112), half-w=90, half-h=50 -->
+          <polygon
+            points="290,62 380,112 290,162 200,112"
+            fill="rgba(200,188,165,0.35)"
+            stroke="#a89878"
+            stroke-width="1.5"
+          />
+          <text
+            x="290"
+            y="107"
+            text-anchor="middle"
+            fill="#2d2a26"
+            font-size="12"
+            font-weight="600"
+          >
+            Is the change
+          </text>
+          <text
+            x="290"
+            y="123"
+            text-anchor="middle"
+            fill="#2d2a26"
+            font-size="12"
+            font-weight="600"
+          >
+            complex?
+          </text>
+
+          <!-- Q1 left branch: NO → x=120 -->
+          <line
+            x1="200"
+            y1="112"
+            x2="120"
+            y2="112"
+            stroke="#9a8a72"
+            stroke-width="2"
+          />
+          <line
+            x1="120"
+            y1="112"
+            x2="120"
+            y2="196"
+            stroke="#9a8a72"
+            stroke-width="2"
+            marker-end="url(#arr)"
+          />
+          <!-- NO label -->
+          <rect
+            x="148"
+            y="83"
+            width="34"
+            height="18"
+            rx="9"
+            fill="rgba(220,160,60,0.18)"
+          />
+          <text
+            x="165"
+            y="96"
+            text-anchor="middle"
+            fill="#7a4800"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.5"
+          >
+            NO
+          </text>
+
+          <!-- Q1 right branch: YES → x=460 -->
+          <line
+            x1="380"
+            y1="112"
+            x2="460"
+            y2="112"
+            stroke="#9a8a72"
+            stroke-width="2"
+          />
+          <line
+            x1="460"
+            y1="112"
+            x2="460"
+            y2="196"
+            stroke="#9a8a72"
+            stroke-width="2"
+            marker-end="url(#arr)"
+          />
+          <!-- YES label -->
+          <rect
+            x="402"
+            y="83"
+            width="38"
+            height="18"
+            rx="9"
+            fill="rgba(100,185,130,0.18)"
+          />
+          <text
+            x="421"
+            y="96"
+            text-anchor="middle"
+            fill="#1a5a30"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.5"
+          >
+            YES
+          </text>
+
+          <!-- ── LEFT outcome: direct to Sonnet/Haiku ── -->
+          <rect
+            x="22"
+            y="198"
+            width="196"
+            height="72"
+            rx="8"
+            fill="rgba(100,185,130,0.13)"
+            stroke="rgba(80,165,110,0.45)"
+            stroke-width="1.5"
+          />
+          <text
+            x="120"
+            y="222"
+            text-anchor="middle"
+            fill="#1a4a2e"
+            font-size="11.5"
+          >
+            State changes directly to
+          </text>
+          <text
+            x="120"
+            y="238"
+            text-anchor="middle"
+            fill="#1a4a2e"
+            font-size="11.5"
+          >
+            Sonnet or Haiku —
+          </text>
+          <text
+            x="120"
+            y="254"
+            text-anchor="middle"
+            fill="#1a4a2e"
+            font-size="11.5"
+          >
+            no planning needed.
+          </text>
+
+          <!-- ── Q2 diamond: Domain knowledge? ── -->
+          <!-- centre (460, 252), half-w=90, half-h=50 -->
+          <polygon
+            points="460,202 550,252 460,302 370,252"
+            fill="rgba(200,188,165,0.35)"
+            stroke="#a89878"
+            stroke-width="1.5"
+          />
+          <text
+            x="460"
+            y="247"
+            text-anchor="middle"
+            fill="#2d2a26"
+            font-size="12"
+            font-weight="600"
+          >
+            Domain knowledge
+          </text>
+          <text
+            x="460"
+            y="263"
+            text-anchor="middle"
+            fill="#2d2a26"
+            font-size="12"
+            font-weight="600"
+          >
+            to preserve?
+          </text>
+
+          <!-- Q2 left branch: NO → x=340 -->
+          <line
+            x1="370"
+            y1="252"
+            x2="310"
+            y2="252"
+            stroke="#9a8a72"
+            stroke-width="2"
+          />
+          <line
+            x1="310"
+            y1="252"
+            x2="310"
+            y2="356"
+            stroke="#9a8a72"
+            stroke-width="2"
+            marker-end="url(#arr)"
+          />
+          <!-- NO label -->
+          <rect
+            x="324"
+            y="223"
+            width="34"
+            height="18"
+            rx="9"
+            fill="rgba(220,160,60,0.18)"
+          />
+          <text
+            x="341"
+            y="236"
+            text-anchor="middle"
+            fill="#7a4800"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.5"
+          >
+            NO
+          </text>
+
+          <!-- Q2 right branch: YES → x=590 -->
+          <line
+            x1="550"
+            y1="252"
+            x2="598"
+            y2="252"
+            stroke="#9a8a72"
+            stroke-width="2"
+          />
+          <line
+            x1="598"
+            y1="252"
+            x2="598"
+            y2="356"
+            stroke="#9a8a72"
+            stroke-width="2"
+            marker-end="url(#arr)"
+          />
+          <!-- YES label -->
+          <rect
+            x="558"
+            y="223"
+            width="38"
+            height="18"
+            rx="9"
+            fill="rgba(100,185,130,0.18)"
+          />
+          <text
+            x="577"
+            y="236"
+            text-anchor="middle"
+            fill="#1a5a30"
+            font-size="10"
+            font-weight="700"
+            letter-spacing="0.5"
+          >
+            YES
+          </text>
+
+          <!-- ── grill-me outcome box ── -->
+          <rect
+            x="218"
+            y="358"
+            width="184"
+            height="80"
+            rx="8"
+            fill="rgba(100,150,220,0.12)"
+            stroke="rgba(80,130,200,0.4)"
+            stroke-width="1.5"
+          />
+          <text
+            x="310"
+            y="381"
+            text-anchor="middle"
+            fill="#1a3570"
+            font-size="11.5"
+            font-style="italic"
+            text-decoration="underline"
+          >
+            <a
+              href="https://www.aihero.dev/my-grill-me-skill-has-gone-viral"
+              target="_blank"
+            >
+              grill-me
+            </a>
+          </text>
+          <text
+            x="310"
+            y="399"
+            text-anchor="middle"
+            fill="#1a3570"
+            font-size="11.5"
+          >
+            + plan mode, then
+          </text>
+          <text
+            x="310"
+            y="416"
+            text-anchor="middle"
+            fill="#1a3570"
+            font-size="11.5"
+          >
+            implement with Sonnet.
+          </text>
+
+          <!-- ── OpenSpec outcome box ── -->
+          <rect
+            x="506"
+            y="358"
+            width="184"
+            height="80"
+            rx="8"
+            fill="rgba(160,120,230,0.11)"
+            stroke="rgba(140,100,210,0.4)"
+            stroke-width="1.5"
+          />
+          <text
+            x="598"
+            y="381"
+            text-anchor="middle"
+            fill="#38107a"
+            font-size="11.5"
+            font-style="italic"
+            text-decoration="underline"
+          >
+            <a href="https://github.com/Fission-AI/OpenSpec/" target="_blank">
+              OpenSpec
+            </a>
+          </text>
+          <text
+            x="598"
+            y="399"
+            text-anchor="middle"
+            fill="#38107a"
+            font-size="11.5"
+          >
+            Plan &amp; spec in Opus,
+          </text>
+          <text
+            x="598"
+            y="416"
+            text-anchor="middle"
+            fill="#38107a"
+            font-size="11.5"
+          >
+            implement in Sonnet.
+          </text>
+        </svg>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- ─── OPUSPLAN ────────────────────────────────────────────────────── -->
+      <h2>The <code>opusplan</code> Model in Claude Code</h2>
+      <p>
+        Claude Code ships a built-in model shorthand called
+        <code>opusplan</code>. It automates the plan-then-implement handoff:
+      </p>
+      <ol>
+        <li>
+          The <strong>planning phase</strong> runs on Opus — high-quality
+          reasoning over the problem.
+        </li>
+        <li>
+          Once a plan is approved, Claude Code
+          <strong>automatically switches to Sonnet</strong> for implementation.
+        </li>
+      </ol>
+      <p>
+        The tradeoff is the context window: <code>opusplan</code> caps at
+        <strong>200K tokens</strong>. This is enough for most day-to-day tasks,
+        but it becomes a limitation when:
+      </p>
+      <ul>
+        <li>You need to load a large codebase into context.</li>
+        <li>
+          Your planning conversation itself accumulates a lot of back-and-forth.
+        </li>
+        <li>
+          You are doing domain-specific work that requires extensive background
+          documentation — see OpenSpec below.
+        </li>
+      </ul>
+
+      <hr class="divider" />
+
+      <!-- ─── OPENSPEC ────────────────────────────────────────────────────── -->
+      <h2>OpenSpec — Domain-Specific Workflows</h2>
+      <p>
+        For work that has a strong domain component — custom business logic,
+        non-obvious architectural constraints, decisions with long-term
+        consequences — a plan alone is not enough. You also need to capture the
+        <em>why</em> so that future implementers (human or AI) understand the
+        reasoning, not just the outcome.
+      </p>
+      <p>
+        <a
+          href="https://github.com/Fission-AI/OpenSpec/"
+          target="_blank"
+          rel="noopener"
+          >OpenSpec</a
+        >
+        is a workflow that does this. A spec document is committed alongside the
+        code, making the rationale a first-class artifact in the repo.
+      </p>
+
+      <h3>When to use OpenSpec</h3>
+      <ul>
+        <li>
+          The feature touches domain rules that are not obvious from the code.
+        </li>
+        <li>
+          There are real trade-offs between approaches that need to be recorded.
+        </li>
+        <li>
+          A future developer reading the code would otherwise have to
+          reverse-engineer intent.
+        </li>
+        <li>
+          You anticipate revisiting this area and want the context to still make
+          sense in six months.
+        </li>
+      </ul>
+
+      <h3>Recommended workflow</h3>
+      <ol class="flow-steps">
+        <li>
+          <span
+            >Open a fresh conversation using full Opus (not
+            <code>opusplan</code>) — 1M context gives you room to include
+            background docs, existing code, and long planning discussions.</span
+          >
+        </li>
+        <li>
+          <span
+            >Work with Opus to reason through the problem, weigh options, and
+            produce a plan.</span
+          >
+        </li>
+        <li>
+          <span
+            >Ask Opus to write the spec document. It should capture the goal,
+            the options considered, the decision made, and the reasons
+            why.</span
+          >
+        </li>
+        <li>
+          <span
+            >Open a new window with Sonnet and hand it the spec. Sonnet
+            implements the plan without burning expensive Opus tokens on routine
+            code generation.</span
+          >
+        </li>
+      </ol>
+
+      <div class="callout callout-info">
+        <div class="callout-title">Why full Opus, not opusplan?</div>
+        <p>
+          <code>opusplan</code> has a 200K context limit. Domain-specific
+          workflows often require large context: existing code, design
+          documents, domain references, or extended planning dialogue. Running
+          on full Opus gives you the full 1M context window so nothing has to be
+          left out of the planning stage.
+        </p>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- ─── NON-DOMAIN WORK ────────────────────────────────────────────── -->
+      <h2>Non-Domain Work — <code>grill-me</code> + Plan Mode</h2>
+      <p>
+        For complex changes that don't require preserving domain knowledge, skip
+        the full spec and use Claude Code's plan mode combined with the
+        <a
+          href="https://www.aihero.dev/my-grill-me-skill-has-gone-viral"
+          target="_blank"
+          rel="noopener"
+          ><code>grill-me</code> skill</a
+        >.
+      </p>
+
+      <h3>The <code>grill-me</code> skill</h3>
+      <p>
+        The <code>grill-me</code> skill, created by Matt Pocock, produces a much
+        better plan than going straight into plan mode alone. Rather than
+        requiring you to know exactly what you want up front, it analyses the
+        codebase and asks you the important questions — surfacing edge cases,
+        hidden assumptions, and failure modes <em>before</em> any plan is
+        written. Your initial input can be rough; the skill sharpens it through
+        dialogue.
+      </p>
+
+      <h3>Claude Code plan mode</h3>
+      <ol class="flow-steps">
+        <li>
+          <span
+            >Invoke <code>grill-me</code>. Claude analyses the code and asks
+            clarifying questions to surface what matters.</span
+          >
+        </li>
+        <li>
+          <span
+            >Answer the questions. Your responses don't need to be polished —
+            the skill works with uncertainty.</span
+          >
+        </li>
+        <li>
+          <span
+            >Enter plan mode. Claude uses the grilling session to produce a
+            well-informed plan.</span
+          >
+        </li>
+        <li>
+          <span
+            >Review and approve the plan, then exit plan mode. Sonnet
+            implements.</span
+          >
+        </li>
+      </ol>
+
+      <hr class="divider" />
+
+      <!-- ─── CONTEXT MANAGEMENT ─────────────────────────────────────────── -->
+      <h2>Context Management — Stay or Start Fresh?</h2>
+      <p>
+        Every conversation accumulates context. At some point you need to
+        decide: keep going in the same window, or open a new one and hand over a
+        summary?
+      </p>
+
+      <h3>Stay in the current chat when</h3>
+      <ul>
+        <li>
+          The conversation contains useful <em>thought history</em> — reasoning
+          that informed earlier decisions and might still be relevant.
+        </li>
+        <li>
+          The context is not yet strained; the model can still hold everything
+          comfortably.
+        </li>
+        <li>The next step is a direct continuation of the current work.</li>
+      </ul>
+
+      <h3>Start a new window when</h3>
+      <ul>
+        <li>
+          Most of the context has been consumed by planning and exploration that
+          is now resolved.
+        </li>
+        <li>
+          The next step is implementation, and you do not want the model
+          spending tokens re-processing old reasoning.
+        </li>
+        <li>
+          You planned in full Opus (1M context) and want to implement in Sonnet
+          — be mindful that Sonnet also has a 1M context window, but if your
+          planning session grew very large, distilling it into a handover doc
+          first keeps the implementation window clean.
+        </li>
+      </ul>
+
+      <div class="callout callout-warning">
+        <div class="callout-title">Context window mismatch</div>
+        <p>
+          If you planned using full Opus (1M context) and switch to a model with
+          a smaller window, you cannot simply carry the whole conversation over.
+          Distil the planning session into a precise handover document first —
+          the decision made, the reasoning behind it, the constraints uncovered,
+          and the exact next steps — then open a new window with that document
+          as the opening prompt. This is not a concern with
+          <code>opusplan</code>, which handles the handoff automatically within
+          its 200K limit.
+        </p>
+      </div>
+
+      <div class="callout callout-tip">
+        <div class="callout-title">Capture before you switch</div>
+        <p>
+          Even when context windows match, a long planning conversation is
+          noisy. Ask the current session to produce a handover doc before
+          switching — the new model gets the distilled insight without having to
+          process the full dialogue.
+        </p>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- ─── SUMMARY ────────────────────────────────────────────────────── -->
+      <h2>Quick Reference</h2>
+
+      <table class="model-table">
+        <thead>
+          <tr>
+            <th>Situation</th>
+            <th>Approach</th>
+            <th>Model</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Simple change, no planning needed</td>
+            <td>State changes directly</td>
+            <td>
+              <span class="badge badge-sonnet">Sonnet</span> or
+              <span class="badge badge-haiku">Haiku</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Complex, no domain knowledge to preserve</td>
+            <td><code>grill-me</code> → plan mode → implement</td>
+            <td><span class="badge badge-sonnet">Sonnet</span></td>
+          </tr>
+          <tr>
+            <td>Complex, moderate context, auto handoff</td>
+            <td><code>opusplan</code> model in Claude Code</td>
+            <td>
+              <span class="badge badge-opus">Opus</span> →
+              <span class="badge badge-sonnet">Sonnet</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Complex, domain knowledge must be preserved</td>
+            <td>OpenSpec — plan + spec in Opus, implement in Sonnet</td>
+            <td>
+              <span class="badge badge-opus">Opus</span> →
+              <span class="badge badge-sonnet">Sonnet</span>
+            </td>
+          </tr>
+          <tr>
+            <td>Context window strained after planning</td>
+            <td>Produce handover doc, open new window</td>
+            <td>Whichever fits</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
