@@ -4,6 +4,7 @@ title: Getting Started with Claude Code
 subtitle: Three ways to run Claude Code, and how to install each one.
 updated: 2026-10-07
 author: Milos
+tags: [claude]
 ---
 
 ## Overview

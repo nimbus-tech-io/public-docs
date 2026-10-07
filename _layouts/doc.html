@@ -18,6 +18,11 @@
         {% if page.updated %}Last updated {{ page.updated | date: "%B %-d, %Y" }}{% endif %}
       </p>
       {% endif %}
+      {% if page.tags %}
+      <p class="tags">
+        {% for tag in page.tags %}<a class="tag" href="{{ '/' | relative_url }}?tag={{ tag }}">{{ tag }}</a>{% endfor %}
+      </p>
+      {% endif %}
       {{ content }}
     </div>
 

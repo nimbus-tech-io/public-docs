@@ -4,6 +4,7 @@ title: "Saving Tokens in Claude Code: A Practical Guide"
 subtitle: Habits that keep your context small, your cache warm, and your usage down.
 updated: 2026-10-07
 author: Milos
+tags: [claude]
 ---
 
 ## The short version
@@ -54,7 +55,7 @@ These actions keep the cache: editing files in your repository, editing CLAUDE.m
 
 Model and effort are the two settings you control that change how many tokens a task burns. Thinking tokens are billed as output tokens, and the default thinking budget can reach tens of thousands of tokens per request depending on the model. In Claude Code you can't turn thinking off on Opus 5.5, Sonnet 5.5 or the Fable models, so lower effort with `/effort` instead.
 
-Which model and effort level suits which kind of task, and the test results behind each recommendation, are covered in [Choosing a Claude Model and Effort Level: Opus 5.5 vs Sonnet 5.5](https://claude.ai/artifact/Lc9sQEngP7jNFW8SRbXrVe).
+Which model and effort level suits which kind of task, and the test results behind each recommendation, are covered in [Choosing a Claude Model and Effort Level: Opus 5.5 vs Sonnet 5.5](choosing-a-model.html).
 
 One more point matters for token use:
 

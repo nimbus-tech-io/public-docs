@@ -4,7 +4,8 @@ title: Using Claude Effectively
 subtitle: A friendly guide to choosing a model, planning a change, and managing context.
 mermaid: true
 updated: 2026-10-07
-author: Šile
+author: Milos
+tags: [claude]
 ---
 
 ## Model overview
@@ -23,7 +24,7 @@ You'll need a recent version of Claude Code for the newest models: v2.1.280 or l
 
 > A good default: plan with Opus, build with Sonnet.
 >
-> Opus shines when a problem is vague or open-ended, because that's where its thinking pays off. Once you have a clear plan, Sonnet can carry it out for about half the price and gets you to the same place. Opus can absolutely write code too. To decide which model and effort level suit a particular piece of work, see our [model and effort guide](https://claude.ai/artifact/Lc9sQEngP7jNFW8SRbXrVe).
+> Opus shines when a problem is vague or open-ended, because that's where its thinking pays off. Once you have a clear plan, Sonnet can carry it out for about half the price and gets you to the same place. Opus can absolutely write code too. To decide which model and effort level suit a particular piece of work, see our [model and effort guide](choosing-a-model.html).
 > {: .callout .callout-tip}
 
 ---
@@ -69,7 +70,7 @@ Select the `opusplan` model and invoke [`grill-me`](https://www.aihero.dev/my-gr
 4. Approve the plan. `opusplan` switches to Sonnet to implement it.
    {: .flow-steps}
 
-As you get more comfortable with Claude, feel free to mix and match: choose your own model for each step, adjust effort levels, or skip planning entirely for small tasks. The [model and effort guide](https://claude.ai/artifact/Lc9sQEngP7jNFW8SRbXrVe) is there when you're ready.
+As you get more comfortable with Claude, feel free to mix and match: choose your own model for each step, adjust effort levels, or skip planning entirely for small tasks. The [model and effort guide](choosing-a-model.html) is there when you're ready.
 
 If the work involves domain knowledge, architectural trade-offs, or decisions people will need to understand months from now, a plan on its own isn't quite enough. That's where OpenSpec comes in.
 
@@ -127,4 +128,4 @@ Paste it into the new window as your opening prompt. Even when two models have t
 | Complex, domain knowledge worth preserving | OpenSpec: plan and spec in Opus, implement in Sonnet | {% include badge.html m="opus" %} → {% include badge.html m="sonnet" %}   |
 | You have a good plan                       | Implement it                                         | {% include badge.html m="sonnet" %}                                       |
 
-Not sure which setup fits your task? Our [model and effort guide](https://claude.ai/artifact/Lc9sQEngP7jNFW8SRbXrVe) goes deeper.
+Not sure which setup fits your task? Our [model and effort guide](choosing-a-model.html) goes deeper.

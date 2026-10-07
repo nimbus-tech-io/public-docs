@@ -355,3 +355,75 @@ code {
   margin: 1.2rem auto 1.4rem;
   border-radius: 6px;
 }
+
+/* Home page list */
+.doc-list {
+  list-style: none;
+  padding-left: 0;
+}
+.doc-list li {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e3d9c6;
+  margin: 0;
+}
+.doc-list li:last-child {
+  border-bottom: none;
+}
+.doc-list a {
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.doc-list p {
+  margin: 0.3rem 0 0;
+  color: #5a5040;
+}
+.doc-list .doc-list-meta {
+  font-size: 0.8rem;
+  color: #9a8c78;
+}
+
+/* Tags */
+.updated:has(+ .tags) {
+  margin-bottom: 0.6rem;
+}
+.tags {
+  margin-bottom: 3rem;
+}
+.tag {
+  display: inline-block;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+  color: #5a5040;
+  background: rgba(200, 188, 165, 0.28);
+  border: 1px solid rgba(180, 165, 140, 0.5);
+  border-radius: 999px;
+  padding: 0.1em 0.7em;
+  margin-right: 0.35em;
+}
+a.tag {
+  border-bottom: 1px solid rgba(180, 165, 140, 0.5);
+}
+a.tag:hover,
+button.tag:hover {
+  color: #1e1b17;
+  background: rgba(200, 188, 165, 0.45);
+}
+button.tag {
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+button.tag.is-active {
+  color: #f5f0e8;
+  background: #3a3020;
+  border-color: #3a3020;
+}
+.tag-filter {
+  margin-bottom: 1rem;
+}
+.doc-list .doc-list-date {
+  margin-right: 0.7em;
+}
