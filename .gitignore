@@ -1,1 +1,4 @@
 .claude/launch.json
+.bundle/
+vendor/
+_site/

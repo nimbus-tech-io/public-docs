@@ -5,3 +5,9 @@ kramdown:
   hard_wrap: false
   syntax_highlighter_opts:
     disable: true
+exclude:
+  - CLAUDE.md
+  - .claude
+  - Gemfile
+  - Gemfile.lock
+  - vendor

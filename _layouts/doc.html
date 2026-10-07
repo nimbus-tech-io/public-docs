@@ -23,7 +23,17 @@
         {% for tag in page.tags %}<a class="tag" href="{{ '/' | relative_url }}?tag={{ tag }}">{{ tag }}</a>{% endfor %}
       </p>
       {% endif %}
-      {{ content }}
+      {% comment %}
+        Turn GitHub-style alerts (> [!TIP], > [!NOTE], > [!WARNING]) into callout boxes.
+        kramdown renders them as "<blockquote>" + newline + "  <p>[!TIP]" + newline + title.
+      {% endcomment %}
+      {% capture nl %}
+{% endcapture %}
+      {% assign quote_start = "<blockquote>" | append: nl | append: "  <p>[!" %}
+      {% assign tip = quote_start | append: "TIP]" | append: nl %}
+      {% assign note = quote_start | append: "NOTE]" | append: nl %}
+      {% assign warning = quote_start | append: "WARNING]" | append: nl %}
+      {{ content | replace: tip, '<blockquote class="callout callout-tip"><p>' | replace: note, '<blockquote class="callout callout-info"><p>' | replace: warning, '<blockquote class="callout callout-warning"><p>' }}
     </div>
 
     <script>

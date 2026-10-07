@@ -22,7 +22,6 @@ The habits that save the most:
 7. **Send noisy work to subagents** and trim noisy output with hooks.
 8. **Avoid Max effort.** It cost about seven times Medium in one real-world test for no gain.
 9. **Check your cache.** Read the `Prompt cache (main)` line in `/usage` when usage looks high.
-{: .flow-steps}
 
 ---
 
@@ -44,10 +43,10 @@ Prompt caching lets Claude Code re-read your unchanged history at a fraction of 
 
 These actions keep the cache: editing files in your repository, editing CLAUDE.md (though the edit only applies after `/clear`, `/compact` or a restart), changing permission mode or output style, running skills and commands, `/recap`, and `/rewind`. Subagents get their own cache and leave the parent's intact.
 
+> [!TIP]
 > Anthropic's own tip
 >
 > Pick your model and effort level at the top of a session, then save `/compact` for natural breaks between tasks.
-{: .callout .callout-tip}
 
 ---
 

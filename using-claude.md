@@ -22,10 +22,10 @@ Prices are [Anthropic API list prices](https://platform.claude.com/docs/en/about
 
 You'll need a recent version of Claude Code for the newest models: v2.1.280 or later for Opus 5.5, and v2.1.284 or later for Sonnet 5.5. If a model isn't available, run `claude update`.
 
+> [!TIP]
 > A good default: plan with Opus, build with Sonnet.
 >
 > Opus shines when a problem is vague or open-ended, because that's where its thinking pays off. Once you have a clear plan, Sonnet can carry it out for about half the price and gets you to the same place. Opus can absolutely write code too. To decide which model and effort level suit a particular piece of work, see our [model and effort guide](choosing-a-model.html).
-> {: .callout .callout-tip}
 
 ---
 
@@ -36,7 +36,6 @@ Take a moment to pick a workflow before you write your first prompt. These three
 1. **Is the change simple?** Describe what you want directly to Sonnet or Haiku. No planning needed.
 2. **Is it complex, with no domain knowledge you need to preserve?** Use [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral) in plan mode, then implement with Sonnet.
 3. **Is it complex, with domain knowledge worth preserving?** Use [OpenSpec](https://github.com/Fission-AI/OpenSpec/). Plan and write the spec in Opus, then implement in Sonnet.
-   {: .flow-steps}
 
 ```mermaid
 flowchart TD
@@ -68,7 +67,6 @@ Select the `opusplan` model and invoke [`grill-me`](https://www.aihero.dev/my-gr
 2. Invoke `grill-me`. Opus looks through the codebase and asks clarifying questions, surfacing edge cases, hidden assumptions, and possible failure modes. Your starting input can be rough.
 3. Answer the questions. When the conversation wraps up, Opus writes a well-informed plan for you to review.
 4. Approve the plan. `opusplan` switches to Sonnet to implement it.
-   {: .flow-steps}
 
 As you get more comfortable with Claude, feel free to mix and match: choose your own model for each step, adjust effort levels, or skip planning entirely for small tasks. The [model and effort guide](choosing-a-model.html) is there when you're ready.
 
@@ -95,7 +93,6 @@ Some work has a strong domain component, such as custom business logic, non-obvi
 2. Work through the problem with Opus, weigh the options, and arrive at a plan.
 3. Ask Opus to write the spec. It should capture the goal, the options you considered, the decision you made, and the reasons why.
 4. Open a new window with Sonnet and hand it the spec. Sonnet carries out the plan, and you save your Opus usage for the thinking.
-   {: .flow-steps}
 
 ---
 

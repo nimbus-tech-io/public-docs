@@ -272,7 +272,7 @@ code {
   border: 1px solid rgba(80, 165, 110, 0.35);
 }
 
-.flow-steps {
+.page > ol {
   list-style: none;
   padding-left: 0;
   font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
@@ -280,7 +280,7 @@ code {
   counter-reset: step;
 }
 
-.flow-steps li {
+.page > ol > li {
   counter-increment: step;
   position: relative;
   padding-left: 2.5rem;
@@ -288,7 +288,7 @@ code {
   margin-bottom: 0.7rem;
 }
 
-.flow-steps li::before {
+.page > ol > li::before {
   content: counter(step);
   position: absolute;
   left: 0;

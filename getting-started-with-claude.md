@@ -36,7 +36,6 @@ The [Claude Code overview](https://code.claude.com/docs/) (Terminal tab) lists t
 1. Open a new terminal window and run `claude --version`. A version number means it worked.
 2. Go to your project folder (`cd your-project`) and run `claude`.
 3. Log in when prompted on first use.
-{: .flow-steps}
 
 Links: [Quickstart](https://code.claude.com/docs/en/quickstart) · [Terminal guide for first-time terminal users](https://code.claude.com/docs/en/terminal-guide) · [Advanced setup](https://code.claude.com/docs/en/setup) · [Installation troubleshooting](https://code.claude.com/docs/en/troubleshoot-install)
 
@@ -53,7 +52,6 @@ The desktop app runs Claude Code in a standalone window, so you don't need a ter
 1. Download the installer: [macOS](https://claude.ai/api/desktop/darwin/universal/dmg/latest/redirect?utm_source=claude_code&utm_medium=docs) (Intel and Apple Silicon), [Windows x64](https://claude.ai/api/desktop/win32/x64/setup/latest/redirect?utm_source=claude_code&utm_medium=docs) or [Windows ARM64](https://claude.ai/api/desktop/win32/arm64/setup/latest/redirect?utm_source=claude_code&utm_medium=docs).
 2. Launch Claude and sign in. A paid subscription is required.
 3. Click the **Code** tab at the top, choose a project folder and give Claude a task.
-{: .flow-steps}
 
 By default the Code tab starts in Ask permissions mode, where Claude proposes changes and waits for your approval before applying them. On Ubuntu or Debian the app is in beta; see the [Linux install instructions](https://code.claude.com/docs/en/desktop-linux).
 
@@ -75,12 +73,11 @@ The VS Code extension is the recommended way to use Claude Code inside VS Code. 
 2. If the extension doesn't appear, restart VS Code or run "Developer: Reload Window" from the Command Palette.
 3. Open a file and click the Spark icon in the top-right of the editor toolbar to open the Claude Code panel.
 4. Click **Sign in** and finish authorization in your browser.
-{: .flow-steps}
 
+> [!NOTE]
 > Want `claude` in the terminal too?
 >
 > The extension bundles its own copy of the CLI for the chat panel but does not put `claude` on your PATH. To run `claude` in VS Code's integrated terminal, also install the standalone CLI from Option 1.
-{: .callout .callout-info}
 
 Links: [VS Code extension guide](https://code.claude.com/docs/en/vscode-extension) · [Marketplace listing](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) · [Troubleshooting](https://code.claude.com/docs/en/troubleshooting)
 

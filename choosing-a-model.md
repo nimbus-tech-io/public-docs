@@ -16,12 +16,11 @@ Three rules cover most situations:
 1. **Existing code, judgment needed:** Opus at Medium. Drop to Opus Low to save money.
 2. **Small, well-specified change with tests:** Sonnet at Low or Medium.
 3. **Tempted by Sonnet High or Extra:** use Opus instead. In a 300-run test on a real codebase, Opus Low matched Sonnet High's results for about 36% less cost, and Sonnet Extra cost twice as much as Opus Medium while scoring lower.
-{: .flow-steps}
 
+> [!NOTE]
 > Why more effort is not always better
 >
 > Effort controls how much a model spends, not how careful it is. On real code, raising Opus above Medium made it break more existing tests.
-{: .callout .callout-info}
 
 ---
 
@@ -128,10 +127,10 @@ Known limits of the evidence:
 - **Vendor and aggregator blogs.** Several comparison pages restate Anthropic's published figures, and none of the build-from-scratch tests are controlled studies.
 - **The new-versus-existing-code split is a pattern.** It fits the diff-size explanation, but three small studies do not prove it.
 
+> [!TIP]
 > Check it on your own work
 >
 > Take five to ten recent changes with good tests, run each at Opus Low, Opus Medium and Sonnet Medium, and record three numbers per setting: runs that pass every test, existing tests broken, and cost. If Opus Low and Sonnet Medium tie on quality, choose by cost; if either one misses edge cases, move that task type up a level.
-{: .callout .callout-tip}
 
 ---
 
