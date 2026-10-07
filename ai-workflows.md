@@ -1,7 +1,7 @@
 ---
 layout: doc
-title: Using Claude Effectively
-subtitle: A friendly guide to choosing a model, planning a change, and managing context.
+title: AI Workflows
+subtitle: Which workflow to pick for a change, from a quick prompt to a fully documented plan.
 mermaid: true
 updated: 2026-10-07
 author: Milos
@@ -34,16 +34,16 @@ You'll need a recent version of Claude Code for the newest models: v2.1.280 or l
 Take a moment to pick a workflow before you write your first prompt. These three questions will get you there:
 
 1. **Is the change simple?** Describe what you want directly to Sonnet or Haiku. No planning needed.
-2. **Is it complex, with no domain knowledge you need to preserve?** Use [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral) in plan mode, then implement with Sonnet.
-3. **Is it complex, with domain knowledge worth preserving?** Use [OpenSpec](https://github.com/Fission-AI/OpenSpec/). Plan and write the spec in Opus, then implement in Sonnet.
+2. **Is it medium-sized, and you only need a plan?** Use `opusplan` with [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral) in plan mode.
+3. **Is it big, or do you want to keep the reasoning for later?** Use [Matt Pocock's skills](matt-pocock-skills.html). They plan the work with you and save the domain knowledge and decisions in the repo. [OpenSpec](https://github.com/Fission-AI/OpenSpec/) is an alternative if you prefer it.
 
 ```mermaid
 flowchart TD
     start(["<span style='color:#f5f0e8;font-weight:700;letter-spacing:.5px'>START</span>"]) --> q1{Is the change<br/>complex?}
     q1 -- NO --> direct[Describe the change directly to<br/>Sonnet or Haiku —<br/>no planning needed.]
-    q1 -- YES --> q2{Domain knowledge<br/>to preserve?}
-    q2 -- NO --> grill["<a href='https://www.aihero.dev/my-grill-me-skill-has-gone-viral'><i>grill-me</i></a><br/>+ plan mode, then<br/>implement with Sonnet."]
-    q2 -- YES --> openspec["<a href='https://github.com/Fission-AI/OpenSpec/'><i>OpenSpec</i></a><br/>Plan & spec in Opus,<br/>implement in Sonnet."]
+    q1 -- YES --> q2{Keep the reasoning<br/>for later?}
+    q2 -- NO --> grill["<a href='https://www.aihero.dev/my-grill-me-skill-has-gone-viral'><i>grill-me</i></a><br/>+ opusplan in plan mode."]
+    q2 -- YES --> matt["<a href='matt-pocock-skills.html'><i>Matt Pocock's skills</i></a><br/>grill-with-docs, to-spec,<br/>to-tickets, implement.<br/>Or OpenSpec, if you prefer."]
 
     classDef startNode fill:#3a3020,stroke:#3a3020,color:#f5f0e8,font-weight:700
     classDef green fill:#e3ead9,stroke:#9cc4a6,color:#1a4a2e
@@ -52,7 +52,7 @@ flowchart TD
     class start startNode
     class direct green
     class grill blue
-    class openspec purple
+    class matt purple
 ```
 
 ---
@@ -70,24 +70,35 @@ Select the `opusplan` model and invoke [`grill-me`](https://www.aihero.dev/my-gr
 
 As you get more comfortable with Claude, feel free to mix and match: choose your own model for each step, adjust effort levels, or skip planning entirely for small tasks. The [model and effort guide](choosing-a-model.html) is there when you're ready.
 
-If the work involves domain knowledge, architectural trade-offs, or decisions people will need to understand months from now, a plan on its own isn't quite enough. That's where OpenSpec comes in.
+`grill-me` is one of Matt Pocock's skills. When the work needs more than a plan, the rest of his skills take over.
 
 ---
 
-## OpenSpec: domain knowledge and architecture
+## Bigger work: Matt Pocock's skills
 
 Some work has a strong domain component, such as custom business logic, non-obvious architectural constraints, or decisions with long-term consequences. For that kind of work, it helps to capture the _why_ alongside the plan, so that future implementers (human or AI) understand the reasoning and not just the outcome.
 
-[OpenSpec](https://github.com/Fission-AI/OpenSpec/) is a workflow built for this. A spec document is committed alongside the code, which makes the rationale a first-class part of the repo.
+[Matt Pocock's skills](matt-pocock-skills.html) do this. They go well past `grill-me`: they take a change from the first questions to a spec, small tickets, test-first code and a review. On the way, they save the project's shared words in `CONTEXT.md` and the decisions in ADRs (short decision records), next to the code.
 
-### When OpenSpec is a good fit
+### When this is a good fit
 
 - The feature touches domain rules that aren't obvious from the code.
 - There are real trade-offs between approaches that are worth recording.
 - A future developer would otherwise have to reverse-engineer the intent.
 - You expect to revisit this area and want the context to still make sense in six months.
 
-### Recommended workflow
+The skills change often, so we don't copy the steps here. See [Using Matt Pocock's Skills](matt-pocock-skills.html) for how to install them, and for links to Matt's docs and videos.
+
+> [!TIP]
+> Plan with Opus, build with Sonnet
+>
+> The same model split works here. Use Opus for the grilling and the spec, then open a new window with Sonnet for the tickets and the code.
+
+---
+
+## Alternative: OpenSpec
+
+[OpenSpec](https://github.com/Fission-AI/OpenSpec/) is another way to keep the _why_ in the repo. A spec document is committed alongside the code. Use it instead of Matt's skills if you prefer how it works.
 
 1. Open a fresh conversation with Opus. Its 1M context gives you plenty of room for background docs, existing code, and a long planning discussion.
 2. Work through the problem with Opus, weigh the options, and arrive at a plan.
@@ -102,7 +113,7 @@ Every conversation builds up context, so at some point you'll choose between car
 
 **After a short planning session.** If the session was short and the plan is modest, there's no need to switch. Stay with the model you started on, or use `opusplan` and let it do the handoff for you.
 
-**After a long planning session.** If planning and exploration have used up most of your context, end the session with a handover document and open a fresh window on Sonnet. A new window has no cache to lose, and Sonnet gets the distilled insight without wading through the whole conversation. This is the same approach we recommend after an OpenSpec session.
+**After a long planning session.** If planning and exploration have used up most of your context, end the session with a handover document and open a fresh window on Sonnet. A new window has no cache to lose, and Sonnet gets the distilled insight without wading through the whole conversation. Matt's `/handoff` skill writes this document for you.
 
 A good handover document includes:
 
@@ -121,8 +132,8 @@ Paste it into the new window as your opening prompt. Even when two models have t
 | ------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------- |
 | Simple change, no planning needed          | Describe the change directly                         | {% include badge.html m="sonnet" %} or {% include badge.html m="haiku" %} |
 | Vague or open-ended request                | Think it through with Opus first                     | {% include badge.html m="opus" %}                                         |
-| Complex, no domain knowledge to preserve   | `opusplan` + `grill-me` in plan mode                 | `opusplan`                                                                |
-| Complex, domain knowledge worth preserving | OpenSpec: plan and spec in Opus, implement in Sonnet | {% include badge.html m="opus" %} → {% include badge.html m="sonnet" %}   |
+| Complex, no reasoning to keep | `opusplan` + `grill-me` in plan mode | `opusplan` |
+| Complex, reasoning worth keeping | Matt Pocock's skills (or OpenSpec): plan and spec in Opus, build in Sonnet | {% include badge.html m="opus" %} → {% include badge.html m="sonnet" %} |
 | You have a good plan                       | Implement it                                         | {% include badge.html m="sonnet" %}                                       |
 
 Not sure which setup fits your task? Our [model and effort guide](choosing-a-model.html) goes deeper.

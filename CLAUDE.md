@@ -58,7 +58,7 @@ Don't use kramdown `{: .class}` lines. Prettier moves them and breaks the stylin
 
 **Images:** `![Alt text](assets/images/<doc-name>/file.png)`. Use a relative path with no leading slash.
 
-**Charts:** use a fenced `mermaid` block and set `mermaid: true` in the front matter. `using-claude.md` has a flowchart with the house colors (`classDef`) to copy.
+**Charts:** use a fenced `mermaid` block and set `mermaid: true` in the front matter. `ai-workflows.md` has a flowchart with the house colors (`classDef`) to copy.
 
 **Links:** external links open in a new tab by themselves. Link to other docs by file name, like `[text](choosing-a-model.html)`.
 
