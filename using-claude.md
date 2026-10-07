@@ -3,6 +3,7 @@ layout: doc
 title: Using Claude Effectively
 subtitle: A friendly guide to choosing a model, planning a change, and managing context.
 mermaid: true
+updated: 2026-10-07
 ---
 
 ## Model overview

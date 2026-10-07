@@ -51,6 +51,17 @@ h1 {
   line-height: 1.2;
 }
 
+.subtitle:has(+ .updated) {
+  margin-bottom: 0.3rem;
+}
+
+.updated {
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  color: #9a8c78;
+  font-size: 0.8rem;
+  margin-bottom: 3rem;
+}
+
 .subtitle {
   font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
   color: #7a6f60;
