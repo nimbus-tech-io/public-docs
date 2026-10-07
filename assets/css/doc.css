@@ -1,0 +1,324 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    "Palatino Linotype", "Palatino", "Book Antiqua", Georgia, serif;
+  font-size: 17px;
+  line-height: 1.75;
+  color: #2d2a26;
+  background-color: #f5f0e8;
+  background-image:
+    radial-gradient(
+      ellipse at 20% 0%,
+      rgba(210, 195, 170, 0.45) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 80% 100%,
+      rgba(195, 185, 160, 0.3) 0%,
+      transparent 55%
+    );
+  min-height: 100vh;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(252, 248, 240, 0.85);
+  border: 1px solid rgba(200, 188, 165, 0.6);
+  border-radius: 10px;
+  padding: 3rem 3.5rem;
+  box-shadow:
+    0 1px 3px rgba(100, 85, 60, 0.07),
+    0 6px 24px rgba(100, 85, 60, 0.08);
+}
+
+h1 {
+  font-family:
+    "Avenir Next", "Avenir", "Nunito", "Trebuchet MS", sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1e1b17;
+  margin-bottom: 0.45rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  color: #7a6f60;
+  font-size: 0.95rem;
+  margin-bottom: 3rem;
+  letter-spacing: 0.01em;
+}
+
+h2 {
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #1e1b17;
+  margin-top: 2.8rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid #d6cbb8;
+}
+
+h3 {
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-top: 1.7rem;
+  margin-bottom: 0.55rem;
+  color: #7a6f60;
+}
+
+p {
+  margin-bottom: 0.9rem;
+  color: #2d2a26;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 0.97rem;
+}
+
+ul,
+ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.9rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+  color: #2d2a26;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 0.97rem;
+}
+
+strong {
+  color: #1e1b17;
+}
+em {
+  font-style: italic;
+  color: #4a4238;
+}
+
+a {
+  color: #4a6ec0;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(74, 110, 192, 0.35);
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+
+a:hover {
+  color: #2a45a0;
+  border-bottom-color: rgba(42, 69, 160, 0.7);
+}
+
+a code {
+  color: #4a6ec0;
+  border-bottom: 1.5px solid rgba(74, 110, 192, 0.6);
+  border-radius: 4px 4px 0 0;
+}
+
+a:hover code {
+  color: #2a45a0;
+  border-bottom-color: rgba(42, 69, 160, 0.9);
+}
+
+code {
+  font-family: "SF Mono", Menlo, "Courier New", monospace;
+  font-size: 0.82em;
+  background: rgba(200, 188, 165, 0.28);
+  border: 1px solid rgba(180, 165, 140, 0.5);
+  border-radius: 4px;
+  padding: 0.15em 0.45em;
+  color: #4a3820;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1rem 0 1.5rem;
+}
+
+.page table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: 0.875rem;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+}
+
+.page table th {
+  text-align: left;
+  padding: 0.55rem 0.8rem;
+  background: rgba(200, 188, 165, 0.3);
+  border: 1px solid rgba(190, 175, 150, 0.5);
+  font-weight: 600;
+  color: #5a5040;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.page table td {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(190, 175, 150, 0.4);
+  color: #2d2a26;
+  vertical-align: middle;
+}
+
+.page table tr:nth-child(even) td {
+  background: rgba(200, 188, 165, 0.12);
+}
+
+.page table tr:hover td {
+  background: rgba(200, 188, 165, 0.22);
+}
+
+.callout {
+  border-radius: 7px;
+  padding: 1rem 1.25rem;
+  margin: 1.3rem 0;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 0.93rem;
+}
+
+.callout p {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  margin-bottom: 0;
+}
+
+.callout-warning {
+  background: rgba(240, 200, 130, 0.2);
+  border-left: 3px solid #c8860a;
+}
+
+.callout-warning > p:first-child {
+  font-weight: 700;
+  color: #8a5c00;
+  margin-bottom: 0.35rem;
+}
+
+.callout-tip {
+  background: rgba(140, 190, 155, 0.18);
+  border-left: 3px solid #3a9060;
+}
+
+.callout-tip > p:first-child {
+  font-weight: 700;
+  color: #236040;
+  margin-bottom: 0.35rem;
+}
+
+.callout-info {
+  background: rgba(140, 165, 220, 0.16);
+  border-left: 3px solid #4a6ec0;
+}
+
+.callout-info > p:first-child {
+  font-weight: 700;
+  color: #2a45a0;
+  margin-bottom: 0.35rem;
+}
+
+.badge {
+  display: inline-block;
+  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 0.18em 0.5em;
+  vertical-align: middle;
+  margin-left: 0.3em;
+}
+
+.badge-opus {
+  background: rgba(180, 145, 240, 0.2);
+  color: #5a20b0;
+  border: 1px solid rgba(160, 120, 210, 0.35);
+}
+.badge-sonnet {
+  background: rgba(100, 170, 230, 0.2);
+  color: #1a5a9a;
+  border: 1px solid rgba(80, 150, 210, 0.35);
+}
+.badge-haiku {
+  background: rgba(100, 185, 130, 0.2);
+  color: #1a6a40;
+  border: 1px solid rgba(80, 165, 110, 0.35);
+}
+
+.flow-steps {
+  list-style: none;
+  padding-left: 0;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 0.95rem;
+  counter-reset: step;
+}
+
+.flow-steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2.5rem;
+  min-height: 1.65rem;
+  margin-bottom: 0.7rem;
+}
+
+.flow-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.18rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  background: #3a3020;
+  color: #f5f0e8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+}
+
+.page hr {
+  border: none;
+  border-top: 1px solid #d6cbb8;
+  margin: 2.6rem 0;
+}
+
+/* Diagrams (Mermaid) */
+.mermaid {
+  margin: 1.8rem 0 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+.mermaid a {
+  border-bottom: none;
+}
+.mermaid .edgeLabel p,
+.mermaid .edgeLabel span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: 9px;
+  padding: 1px 7px;
+}
