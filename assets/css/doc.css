@@ -314,11 +314,27 @@ code {
 .mermaid a {
   border-bottom: none;
 }
-.mermaid .edgeLabel p,
-.mermaid .edgeLabel span {
+/* Edge labels (NO / YES): one pill, no box behind it */
+.mermaid .labelBkg,
+.mermaid g.edgeLabel rect {
+  background: transparent !important;
+  fill: transparent !important;
+}
+.mermaid span.edgeLabel {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.5px;
+  background: #efe5d3 !important;
   border-radius: 9px;
   padding: 1px 7px;
+  display: inline-block;
+  line-height: 1.6;
+}
+.mermaid span.edgeLabel p {
+  margin: 0;
+  font: inherit;
+  background: transparent !important;
+}
+.mermaid span.edgeLabel:empty {
+  display: none;
 }

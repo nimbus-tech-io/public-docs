@@ -1,0 +1,1 @@
+{"version":"0.0.1","configurations":[{"name":"preview","runtimeExecutable":"npx","runtimeArgs":["-y","http-server","/private/tmp/claude-501/-Users-milos192-projects-public-docs/8b06e595-8772-479e-b2bd-f276e2650619/scratchpad/site","-p","4000","-c-1"],"port":4000}]}
