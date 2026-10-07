@@ -8,7 +8,7 @@
 
 body {
   font-family: "Palatino Linotype", "Palatino", "Book Antiqua", Georgia, serif;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.75;
   color: #2d2a26;
   background-color: #f5f0e8;
@@ -63,7 +63,7 @@ h1 {
 .subtitle {
   font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
   color: #7a6f60;
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-bottom: 3rem;
   letter-spacing: 0.01em;
 }
@@ -95,7 +95,7 @@ p {
   margin-bottom: 0.9rem;
   color: #2d2a26;
   font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
-  font-size: 0.97rem;
+  font-size: 1rem;
 }
 
 ul,
@@ -108,7 +108,7 @@ li {
   margin-bottom: 0.4rem;
   color: #2d2a26;
   font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
-  font-size: 0.97rem;
+  font-size: 1rem;
 }
 
 strong {
@@ -200,7 +200,7 @@ code {
   padding: 1rem 1.25rem;
   margin: 1.3rem 0;
   font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
-  font-size: 0.93rem;
+  font-size: 1rem;
 }
 
 .callout p {
@@ -276,7 +276,7 @@ code {
   list-style: none;
   padding-left: 0;
   font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
   counter-reset: step;
 }
 
