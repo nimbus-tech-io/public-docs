@@ -4,17 +4,18 @@ title: Using Claude Effectively
 subtitle: A friendly guide to choosing a model, planning a change, and managing context.
 mermaid: true
 updated: 2026-10-07
+author: Šile
 ---
 
 ## Model overview
 
 We work with three models, each with its own price and job. A good rule of thumb is to start with the most affordable one that can handle the task well.
 
-| Model | Model ID | Context | Input&nbsp;$/1M | Output&nbsp;$/1M | Role |
-|---|---|---|---|---|---|
-| Claude Opus 5.5 {% include badge.html m="opus" %} | `claude-opus-5-5` | 1M | $4.00 | $20.00 | Planning, architecture, and anything open-ended |
-| Claude Sonnet 5.5 {% include badge.html m="sonnet" %} | `claude-sonnet-5-5` | 1M | $2.00 | $10.00 | Implementation and everyday work |
-| Claude Haiku 4.5 {% include badge.html m="haiku" %} | `claude-haiku-4-5` | 200K | $1.00 | $5.00 | Fast, light, simple tasks |
+| Model                                                 | Model ID            | Context | Input&nbsp;$/1M | Output&nbsp;$/1M | Role                                            |
+| ----------------------------------------------------- | ------------------- | ------- | --------------- | ---------------- | ----------------------------------------------- |
+| Claude Opus 5.5 {% include badge.html m="opus" %}     | `claude-opus-5-5`   | 1M      | $4.00           | $20.00           | Planning, architecture, and anything open-ended |
+| Claude Sonnet 5.5 {% include badge.html m="sonnet" %} | `claude-sonnet-5-5` | 1M      | $2.00           | $10.00           | Implementation and everyday work                |
+| Claude Haiku 4.5 {% include badge.html m="haiku" %}   | `claude-haiku-4-5`  | 200K    | $1.00           | $5.00            | Fast, light, simple tasks                       |
 
 Prices are [Anthropic API list prices](https://platform.claude.com/docs/en/about-claude/pricing) per million tokens, as of October 2026. We use Claude through a subscription, so the same price differences show up as how quickly you use your limits rather than as dollars. Opus costs about twice as much as Sonnet, so it uses your allowance about twice as fast.
 
@@ -23,7 +24,7 @@ You'll need a recent version of Claude Code for the newest models: v2.1.280 or l
 > A good default: plan with Opus, build with Sonnet.
 >
 > Opus shines when a problem is vague or open-ended, because that's where its thinking pays off. Once you have a clear plan, Sonnet can carry it out for about half the price and gets you to the same place. Opus can absolutely write code too. To decide which model and effort level suit a particular piece of work, see our [model and effort guide](https://claude.ai/artifact/Lc9sQEngP7jNFW8SRbXrVe).
-{: .callout .callout-tip}
+> {: .callout .callout-tip}
 
 ---
 
@@ -34,7 +35,7 @@ Take a moment to pick a workflow before you write your first prompt. These three
 1. **Is the change simple?** Describe what you want directly to Sonnet or Haiku. No planning needed.
 2. **Is it complex, with no domain knowledge you need to preserve?** Use [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral) in plan mode, then implement with Sonnet.
 3. **Is it complex, with domain knowledge worth preserving?** Use [OpenSpec](https://github.com/Fission-AI/OpenSpec/). Plan and write the spec in Opus, then implement in Sonnet.
-{: .flow-steps}
+   {: .flow-steps}
 
 ```mermaid
 flowchart TD
@@ -66,7 +67,7 @@ Select the `opusplan` model and invoke [`grill-me`](https://www.aihero.dev/my-gr
 2. Invoke `grill-me`. Opus looks through the codebase and asks clarifying questions, surfacing edge cases, hidden assumptions, and possible failure modes. Your starting input can be rough.
 3. Answer the questions. When the conversation wraps up, Opus writes a well-informed plan for you to review.
 4. Approve the plan. `opusplan` switches to Sonnet to implement it.
-{: .flow-steps}
+   {: .flow-steps}
 
 As you get more comfortable with Claude, feel free to mix and match: choose your own model for each step, adjust effort levels, or skip planning entirely for small tasks. The [model and effort guide](https://claude.ai/artifact/Lc9sQEngP7jNFW8SRbXrVe) is there when you're ready.
 
@@ -76,7 +77,7 @@ If the work involves domain knowledge, architectural trade-offs, or decisions pe
 
 ## OpenSpec: domain knowledge and architecture
 
-Some work has a strong domain component, such as custom business logic, non-obvious architectural constraints, or decisions with long-term consequences. For that kind of work, it helps to capture the *why* alongside the plan, so that future implementers (human or AI) understand the reasoning and not just the outcome.
+Some work has a strong domain component, such as custom business logic, non-obvious architectural constraints, or decisions with long-term consequences. For that kind of work, it helps to capture the _why_ alongside the plan, so that future implementers (human or AI) understand the reasoning and not just the outcome.
 
 [OpenSpec](https://github.com/Fission-AI/OpenSpec/) is a workflow built for this. A spec document is committed alongside the code, which makes the rationale a first-class part of the repo.
 
@@ -93,7 +94,7 @@ Some work has a strong domain component, such as custom business logic, non-obvi
 2. Work through the problem with Opus, weigh the options, and arrive at a plan.
 3. Ask Opus to write the spec. It should capture the goal, the options you considered, the decision you made, and the reasons why.
 4. Open a new window with Sonnet and hand it the spec. Sonnet carries out the plan, and you save your Opus usage for the thinking.
-{: .flow-steps}
+   {: .flow-steps}
 
 ---
 
@@ -118,12 +119,12 @@ Paste it into the new window as your opening prompt. Even when two models have t
 
 ## Quick reference
 
-| Situation | Approach | Model |
-|---|---|---|
-| Simple change, no planning needed | Describe the change directly | {% include badge.html m="sonnet" %} or {% include badge.html m="haiku" %} |
-| Vague or open-ended request | Think it through with Opus first | {% include badge.html m="opus" %} |
-| Complex, no domain knowledge to preserve | `opusplan` + `grill-me` in plan mode | `opusplan` |
-| Complex, domain knowledge worth preserving | OpenSpec: plan and spec in Opus, implement in Sonnet | {% include badge.html m="opus" %} → {% include badge.html m="sonnet" %} |
-| You have a good plan | Implement it | {% include badge.html m="sonnet" %} |
+| Situation                                  | Approach                                             | Model                                                                     |
+| ------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------- |
+| Simple change, no planning needed          | Describe the change directly                         | {% include badge.html m="sonnet" %} or {% include badge.html m="haiku" %} |
+| Vague or open-ended request                | Think it through with Opus first                     | {% include badge.html m="opus" %}                                         |
+| Complex, no domain knowledge to preserve   | `opusplan` + `grill-me` in plan mode                 | `opusplan`                                                                |
+| Complex, domain knowledge worth preserving | OpenSpec: plan and spec in Opus, implement in Sonnet | {% include badge.html m="opus" %} → {% include badge.html m="sonnet" %}   |
+| You have a good plan                       | Implement it                                         | {% include badge.html m="sonnet" %}                                       |
 
 Not sure which setup fits your task? Our [model and effort guide](https://claude.ai/artifact/Lc9sQEngP7jNFW8SRbXrVe) goes deeper.

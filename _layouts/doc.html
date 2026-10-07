@@ -11,7 +11,13 @@
     <div class="page">
       <h1>{{ page.title }}</h1>
       {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
-      {% if page.updated %}<p class="updated">Last updated {{ page.updated | date: "%B %-d, %Y" }}</p>{% endif %}
+      {% if page.author or page.updated %}
+      <p class="updated">
+        {% if page.author %}By {{ page.author }}{% endif %}
+        {% if page.author and page.updated %} · {% endif %}
+        {% if page.updated %}Last updated {{ page.updated | date: "%B %-d, %Y" }}{% endif %}
+      </p>
+      {% endif %}
       {{ content }}
     </div>
 
