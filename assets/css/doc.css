@@ -154,6 +154,21 @@ code {
   color: #4a3820;
 }
 
+pre {
+  background: rgba(200, 188, 165, 0.28);
+  border: 1px solid rgba(180, 165, 140, 0.5);
+  border-radius: 6px;
+  padding: 0.9rem 1.1rem;
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.85em;
+}
+
 .table-scroll {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
