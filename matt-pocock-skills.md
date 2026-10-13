@@ -2,7 +2,7 @@
 layout: doc
 title: Using Matt Pocock's Skills
 subtitle: Where to learn Matt Pocock's skills, and how we install them.
-updated: 2026-10-07
+updated: 2026-10-13
 author: Milos
 tags: [claude]
 ---
@@ -30,13 +30,27 @@ The skills change often, so this page does not copy them. Matt's own docs are al
 
 ---
 
-## How we install them
+## How to install (updated as of 2026-10-13)
 
 **Install the skills as a Claude Code plugin. Don't install them with `npx skills`.**
 
 The plugin updates by itself. The `npx` installer copies the skill files into your repo, and they don't update. If you use both, you get every skill twice.
 
-Follow the Claude Code install steps in the [README](https://github.com/mattpocock/skills#installation-30-second-setup).
+1. Install the plugin. Run this once in your terminal:
+
+   ```bash
+   claude plugin install mattpocock-skills@claude-plugins-official
+   ```
+
+2. Set up each repo. Open Claude Code in the repo and run this once per repo:
+
+   ```text
+   /setup-matt-pocock-skills
+   ```
+
+   It asks which issue tracker you use, which labels you put on tickets, and where to save the docs the skills create.
+
+The commands can change. If a step fails, check the [README](https://github.com/mattpocock/skills#installation-30-second-setup).
 
 > [!WARNING]
 > Old copies
@@ -46,5 +60,10 @@ Follow the Claude Code install steps in the [README](https://github.com/mattpoco
 ---
 
 ## Where to start
+
+- **Big work with many tasks and many unknowns:** start with `/wayfinder`.
+- **One single task:** start with `/grill-me`. It asks you questions until the plan is clear.
+
+For the rest of the flow, read [Matt's skills docs on AI Hero](https://www.aihero.dev/skills).
 
 Not sure which skill to use? Run `/ask-matt` and describe your situation. It points you to the right skill or flow.
