@@ -12,6 +12,16 @@
 # The newest "important" entry is also shown as a banner on the home page.
 
 - date: 2026-10-13
+  title: Install Matt's skills from his own marketplace
+  level: important
+  summary: "The official marketplace is behind (version 1.2.3, Matt is at 1.3.1). If you installed from it, remove that copy, install from the `mattpocock` marketplace, and turn on auto-update."
+  docs: [matt-pocock-skills.md]
+  diff: |
+    - claude plugin install mattpocock-skills@claude-plugins-official
+    + claude plugin marketplace add mattpocock/skills
+    + claude plugin install mattpocock-skills@mattpocock
+
+- date: 2026-10-13
   title: Matt Pocock skills page updated
   level: normal
   summary: The page now covers the grill-with-docs skill and has a clearer description of the other skills.
