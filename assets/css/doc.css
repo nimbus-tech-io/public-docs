@@ -442,3 +442,92 @@ button.tag.is-active {
 .doc-list .doc-list-date {
   margin-right: 0.7em;
 }
+
+/* Changelog */
+.entry {
+  margin: 1.8rem 0;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid rgba(190, 175, 150, 0.4);
+}
+
+/* The box grows outward by its padding, so the text lines up with other entries. */
+.entry-important {
+  background: rgba(200, 50, 40, 0.1);
+  box-shadow: inset 4px 0 0 #b3261e;
+  border-bottom: 0;
+  border-radius: 7px;
+  margin-left: -1.25rem;
+  margin-right: -1.25rem;
+  padding: 1.1rem 1.25rem;
+}
+
+.entry-head {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  margin: 0 0 0.2rem;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+  font-size: 0.85rem;
+}
+
+.entry-level {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b6358;
+}
+
+.entry-important .entry-level {
+  background: #b3261e;
+  color: #fff;
+  border-radius: 3px;
+  padding: 0.05em 0.5em;
+}
+
+.entry h2 {
+  margin-top: 0;
+}
+
+.entry-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin-bottom: 0;
+}
+
+pre.diff {
+  overflow-x: auto;
+}
+
+pre.diff .diff-add,
+pre.diff .diff-del {
+  display: block;
+}
+
+pre.diff .diff-add {
+  background: rgba(58, 144, 96, 0.18);
+  color: #236040;
+}
+
+pre.diff .diff-del {
+  background: rgba(190, 60, 50, 0.16);
+  color: #8a2a20;
+}
+
+.important-banner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 1.3rem 0;
+  padding: 0.9rem 1.25rem;
+  background: rgba(200, 50, 40, 0.1);
+  border-left: 4px solid #b3261e;
+  border-radius: 7px;
+  color: #2d2a26;
+  text-decoration: none;
+  font-family: "Avenir Next", "Avenir", "Trebuchet MS", sans-serif;
+}
+
+.important-banner strong {
+  color: #a52a1f;
+}

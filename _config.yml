@@ -11,3 +11,8 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - docs
+  - .scratch
+  - GLOSSARY.md
+  - GLOSSARY-MAP.md
+  - CLAUDE.local.md

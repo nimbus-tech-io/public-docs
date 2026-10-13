@@ -1,0 +1,66 @@
+# Changelog entries. The page sorts by date, newest first. Entries with the same date keep the order they have in this file (first in file = first on page).
+#
+# Fields:
+#   date     (required) YYYY-MM-DD
+#   title    (required) short title
+#   level    (required) important | normal
+#   summary  (required) one or two sentences (Markdown allowed)
+#   docs     (optional) list of doc file names, e.g. [saving-tokens.md]
+#   commit   (optional) commit hash, or a full URL
+#   diff     (optional) before/after text; lines starting with + or - are coloured
+#
+# The newest "important" entry is also shown as a banner on the home page.
+
+- date: 2026-10-13
+  title: Matt Pocock skills page updated
+  level: normal
+  summary: The page now covers the grill-with-docs skill and has a clearer description of the other skills.
+  docs: [matt-pocock-skills.md]
+  commit: 920f091
+
+- date: 2026-10-12
+  title: New page on Claude Code hooks, and a rewrite of the secret-reads page
+  level: important
+  summary: "Replaces the old blocking system with a new script that's more sophisticated and does not block access to .env.example, so read this if you were having issues before."
+  docs: [claude-code-hooks.md, blocking-secret-reads.md]
+  commit: 61e6242
+
+- date: 2026-10-09
+  title: New security page on blocking secret reads
+  level: normal
+  summary: A basic set of deny rules that stops everyday commands from reading secret files. Set this up on your machine.
+  docs: [blocking-claude-secret-reads-basic.md]
+  commit: 7dc5393
+
+- date: 2026-10-07
+  title: Page renamed, old link no longer works
+  level: important
+  summary: "Two pages changed address. Update your bookmarks and any links you shared."
+  docs: [ai-workflows.md, getting-started-with-claude.md]
+  commit: 7c43b35
+  diff: |
+    - using-claude.html
+    + ai-workflows.html
+    - getting-started.html
+    + getting-started-with-claude.html
+
+- date: 2026-10-07
+  title: Developer onboarding and VS Code extensions pages
+  level: normal
+  summary: Two new pages for new hires. One covers onboarding steps and the other lists useful VS Code extensions.
+  docs: [developer-onboarding.md, vs-code-extensions.md]
+  commit: 23e8305
+
+- date: 2026-10-07
+  title: Tags and a Choosing a Model page
+  level: normal
+  summary: Docs now have tags, and the home page can filter by tag. A new page helps you pick between Opus, Sonnet and Haiku.
+  docs: [choosing-a-model.md]
+  commit: 7c43b35
+
+- date: 2026-10-07
+  title: Getting started and Saving tokens pages
+  level: normal
+  summary: Two new pages. One helps you start with Claude and the other shows how to use fewer tokens.
+  docs: [getting-started-with-claude.md, saving-tokens.md]
+  commit: 1581fea

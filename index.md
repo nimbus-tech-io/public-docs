@@ -4,6 +4,10 @@ title: Nimbus Tech Docs
 subtitle: Guides and references from the Nimbus Tech team.
 ---
 
+{% assign important_days = site.data.changelog | where: "level", "important" | group_by: "date" | sort: "name" | reverse %}
+{% assign newest_important = important_days.first.items.first %}
+{% if newest_important %}<div><a class="important-banner" href="{{ '/changelog.html' | relative_url }}"><strong>Important · {{ newest_important.date | date: "%B %-d, %Y" }}</strong><span>{{ newest_important.title }}</span></a></div>{% endif %}
+
 {% assign docs = site.pages | where: "layout", "doc" | sort: "title" %}
 {% assign all_tags = docs | map: "tags" | compact | join: "," | split: "," | uniq | sort %}
 

@@ -1,4 +1,11 @@
-.claude/launch.json
+.claude/
 .bundle/
 vendor/
 _site/
+
+# Local agent-skill files (private for now)
+CLAUDE.local.md
+docs/
+.scratch/
+GLOSSARY.md
+GLOSSARY-MAP.md
