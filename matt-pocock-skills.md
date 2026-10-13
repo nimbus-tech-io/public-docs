@@ -62,7 +62,7 @@ The commands can change. If a step fails, check the [README](https://github.com/
 ## Where to start
 
 - **Big work with many tasks and many unknowns:** start with `/wayfinder`.
-- **One single task:** start with `/grill-me`. It asks you questions until the plan is clear.
+- **One single task:** start with `/grill-with-docs` or `grill-me`. It asks you questions until the plan is clear. See [here](https://www.aihero.dev/skills-grill-me#when-to-reach-for-it) when to reach for which one.
 
 For the rest of the flow, read [Matt's skills docs on AI Hero](https://www.aihero.dev/skills).
 
