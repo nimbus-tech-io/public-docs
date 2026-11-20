@@ -2,7 +2,7 @@
 layout: doc
 title: Changelog
 subtitle: What changed in the docs, with the important updates marked.
-updated: 2026-10-13
+updated: 2026-11-20
 author: Milos
 tags: [meta]
 ---

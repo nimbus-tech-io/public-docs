@@ -54,6 +54,8 @@ Don't use kramdown `{: .class}` lines. Prettier moves them and breaks the stylin
 
 **Model badges:** `{% include badge.html m="opus" %}`, and the same for `sonnet` and `haiku`.
 
+**Videos:** `{% include video.html id="<YouTube id>" title="Video title" %}` embeds a YouTube video (privacy-friendly domain, 16:9) with a plain link underneath in case the embed fails.
+
 **Tables:** plain Markdown tables. The layout makes them scroll sideways on phones.
 
 **Images:** `![Alt text](assets/images/<doc-name>/file.png)`. Use a relative path with no leading slash.

@@ -3,22 +3,23 @@ layout: doc
 title: AI Workflows
 subtitle: Which workflow to pick for a change, from a quick prompt to a fully documented plan.
 mermaid: true
-updated: 2026-10-07
+updated: 2026-11-20
 author: Milos
 tags: [claude]
 ---
 
 ## Model overview
 
-We work with three models, each with its own price and job. A good rule of thumb is to start with the most affordable one that can handle the task well.
+Claude has four models, each with its own price and job. We use three of them, because Fable isn't on our Team plan unless you pay for its usage costs. Start with the cheapest model that can handle the task well.
 
 | Model                                                 | Model ID            | Context | Input&nbsp;$/1M | Output&nbsp;$/1M | Role                                            |
 | ----------------------------------------------------- | ------------------- | ------- | --------------- | ---------------- | ----------------------------------------------- |
+| Claude Fable 5.2                                      | `claude-fable-5-2`  | 1M      | $8.00           | $40.00           | Ambitious, open-ended work where judgment and accuracy count. Not on our plan |
 | Claude Opus 5.5 {% include badge.html m="opus" %}     | `claude-opus-5-5`   | 1M      | $4.00           | $20.00           | Planning, architecture, and anything open-ended |
 | Claude Sonnet 5.5 {% include badge.html m="sonnet" %} | `claude-sonnet-5-5` | 1M      | $2.00           | $10.00           | Implementation and everyday work                |
-| Claude Haiku 4.5 {% include badge.html m="haiku" %}   | `claude-haiku-4-5`  | 200K    | $1.00           | $5.00            | Fast, light, simple tasks                       |
+| Claude Haiku 5.5 {% include badge.html m="haiku" %}   | `claude-haiku-5-5`  | 1M      | $0.10*          | $0.50*           | Simple, repetitive work that is easy to check: classification, routing, summaries and read-only subagents |
 
-Prices are [Anthropic API list prices](https://platform.claude.com/docs/en/about-claude/pricing) per million tokens, as of October 2026. We use Claude through a subscription, so the same price differences show up as how quickly you use your limits rather than as dollars. Opus costs about twice as much as Sonnet, so it uses your allowance about twice as fast.
+Prices are [Anthropic API list prices](https://platform.claude.com/docs/en/about-claude/pricing) per million tokens, as of November 2026. *Haiku 5.5 costs $0.50 input and $2.50 output once a prompt passes 100,000 tokens. We use Claude through a subscription, so the same price differences show up as how quickly you use your limits rather than as dollars. Opus costs about twice as much as Sonnet, so it uses your allowance about twice as fast.
 
 You'll need a recent version of Claude Code for the newest models: v2.1.280 or later for Opus 5.5, and v2.1.284 or later for Sonnet 5.5. If a model isn't available, run `claude update`.
 
@@ -34,7 +35,7 @@ You'll need a recent version of Claude Code for the newest models: v2.1.280 or l
 Take a moment to pick a workflow before you write your first prompt. These three questions will get you there:
 
 1. **Is the change simple?** Describe what you want directly to Sonnet or Haiku. No planning needed.
-2. **Is it medium-sized, and you only need a plan?** Use `opusplan` with [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral) in plan mode.
+2. **Is it medium-sized, and you only need a plan?** Plan with [grill-me](https://www.aihero.dev/my-grill-me-skill-has-gone-viral) on Opus, then hand off to a new Sonnet chat.
 3. **Is it big, or do you want to keep the reasoning for later?** Use [Matt Pocock's skills](matt-pocock-skills.html). They plan the work with you and save the domain knowledge and decisions in the repo. [OpenSpec](https://github.com/Fission-AI/OpenSpec/) is an alternative if you prefer it.
 
 ```mermaid
@@ -42,7 +43,7 @@ flowchart TD
     start(["<span style='color:#f5f0e8;font-weight:700;letter-spacing:.5px'>START</span>"]) --> q1{Is the change<br/>complex?}
     q1 -- NO --> direct[Describe the change directly to<br/>Sonnet or Haiku —<br/>no planning needed.]
     q1 -- YES --> q2{Keep the reasoning<br/>for later?}
-    q2 -- NO --> grill["<a href='https://www.aihero.dev/my-grill-me-skill-has-gone-viral'><i>grill-me</i></a><br/>+ opusplan in plan mode."]
+    q2 -- NO --> grill["<a href='https://www.aihero.dev/my-grill-me-skill-has-gone-viral'><i>grill-me</i></a><br/>+ Opus plan, then<br/>handoff to a new Sonnet chat."]
     q2 -- YES --> matt["<a href='matt-pocock-skills.html'><i>Matt Pocock's skills</i></a><br/>grill-with-docs, to-spec,<br/>to-tickets, implement.<br/>Or OpenSpec, if you prefer."]
 
     classDef startNode fill:#3a3020,stroke:#3a3020,color:#f5f0e8,font-weight:700
@@ -57,16 +58,17 @@ flowchart TD
 
 ---
 
-## Medium complexity: `opusplan` + `grill-me`
+## Medium complexity: `grill-me` + handoff
 
-For changes that are too involved to describe in one go but don't need a lasting record of the reasoning, `opusplan` with `grill-me` is a lovely place to start. It's also a great default if you're newer to Claude: a simple plan-then-implement flow that works well most of the time, with no manual model switching.
+For changes that are too involved to describe in one go but don't need a lasting record of the reasoning, planning with `grill-me` on Opus and then handing off to Sonnet is a lovely place to start. It's also a great default if you're newer to Claude: a plan-then-implement flow that works well most of the time.
 
-Select the `opusplan` model and invoke [`grill-me`](https://www.aihero.dev/my-grill-me-skill-has-gone-viral) from plan mode. Opus explores the codebase and talks the problem through with you, then produces a plan. Once you approve it, `opusplan` hands off to Sonnet for the implementation.
+Start a chat on Opus and invoke [`grill-me`](https://www.aihero.dev/my-grill-me-skill-has-gone-viral). Opus explores the codebase and talks the problem through with you, then writes a plan. Once you approve it, you write a handoff document and give it to Sonnet in a new chat to implement.
 
-1. Select the `opusplan` model and enter plan mode.
+1. Start a chat on Opus.
 2. Invoke `grill-me`. Opus looks through the codebase and asks clarifying questions, surfacing edge cases, hidden assumptions, and possible failure modes. Your starting input can be rough.
 3. Answer the questions. When the conversation wraps up, Opus writes a well-informed plan for you to review.
-4. Approve the plan. `opusplan` switches to Sonnet to implement it.
+4. Approve the plan and ask Opus to write a handoff document (Matt's `/handoff` skill does this).
+5. Open a new chat on Sonnet and paste in the handoff document to implement the plan.
 
 As you get more comfortable with Claude, feel free to mix and match: choose your own model for each step, adjust effort levels, or skip planning entirely for small tasks. The [model and effort guide](choosing-a-model.html) is there when you're ready.
 
@@ -109,11 +111,11 @@ The skills change often, so we don't copy the steps here. See [Using Matt Pocock
 
 ## Context management: stay or start fresh?
 
-Every conversation builds up context, so at some point you'll choose between carrying on in the same window and starting a new one. One thing worth knowing: each model keeps its own cache, so switching models with `/model` in the middle of a session means the new model has to reread the whole conversation from scratch. You pay that cost once per switch, and it can eat into the savings from moving to a cheaper model.
+Every conversation builds up context, so at some point you'll choose between carrying on in the same window and starting a new one. Don't change the model inside a chat. Each model keeps its own cache, so the new model rereads the whole conversation from scratch and eats into the savings from going cheaper. Going down a tier loses something else too: a smaller model can't read a bigger model's earlier thinking. To use a different model, hand off to a new chat.
 
-**After a short planning session.** If the session was short and the plan is modest, there's no need to switch. Stay with the model you started on, or use `opusplan` and let it do the handoff for you.
+**After a short planning session.** If the session was short and the plan is modest, stay on the model you started with and carry on in the same chat.
 
-**After a long planning session.** If planning and exploration have used up most of your context, end the session with a handover document and open a fresh window on Sonnet. A new window has no cache to lose, and Sonnet gets the distilled insight without wading through the whole conversation. Matt's `/handoff` skill writes this document for you.
+**When you want a different model, or after a long planning session.** End the session with a handover document and open a fresh window on the new model, for example Sonnet after Opus planning. A new window has no cache to lose, and Sonnet gets the distilled insight without wading through the whole conversation. Matt's `/handoff` skill writes this document for you.
 
 A good handover document includes:
 
@@ -132,7 +134,7 @@ Paste it into the new window as your opening prompt. Even when two models have t
 | ------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------- |
 | Simple change, no planning needed          | Describe the change directly                         | {% include badge.html m="sonnet" %} or {% include badge.html m="haiku" %} |
 | Vague or open-ended request                | Think it through with Opus first                     | {% include badge.html m="opus" %}                                         |
-| Complex, no reasoning to keep | `opusplan` + `grill-me` in plan mode | `opusplan` |
+| Complex, no reasoning to keep | `grill-me` on Opus, then handoff | {% include badge.html m="opus" %} → {% include badge.html m="sonnet" %} |
 | Complex, reasoning worth keeping | Matt Pocock's skills (or OpenSpec): plan and spec in Opus, build in Sonnet | {% include badge.html m="opus" %} → {% include badge.html m="sonnet" %} |
 | You have a good plan                       | Implement it                                         | {% include badge.html m="sonnet" %}                                       |
 

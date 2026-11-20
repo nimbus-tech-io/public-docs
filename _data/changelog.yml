@@ -11,6 +11,24 @@
 #
 # The newest "important" entry is also shown as a banner on the home page.
 
+- date: 2026-11-20
+  title: Model and effort guidance updated from Ben's video
+  level: normal
+  summary: "Fable and Haiku 5.5 join the model overview (we use three, since Fable needs paid usage on Team). The model and effort page gains an order for picking effort, steps for weak output and Haiku guidance. Saving tokens covers subagent models and skills that set a model."
+  docs: [ai-workflows.md, choosing-a-model.md, saving-tokens.md]
+
+- date: 2026-11-20
+  title: Change models with a handoff, not mid-chat
+  level: important
+  summary: "Changing the model inside a chat makes the new model reread the whole session at full price. To use another model, write a handoff document and start a new chat. The `grill-me` flow in AI Workflows now works this way."
+  docs: [ai-workflows.md, saving-tokens.md, choosing-a-model.md]
+
+- date: 2026-11-20
+  title: Video added to the model and effort page
+  level: normal
+  summary: The page links a Ben AI video on picking a Claude model and effort level, in the short version and in the sources.
+  docs: [choosing-a-model.md]
+
 - date: 2026-10-13
   title: Install Matt's skills from his own marketplace
   level: important

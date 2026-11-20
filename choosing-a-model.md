@@ -2,7 +2,7 @@
 layout: doc
 title: "Choosing a Claude Model and Effort Level: Opus 5.5 vs Sonnet 5.5"
 subtitle: Which model and effort level to use for which task, and the evidence behind it.
-updated: 2026-10-07
+updated: 2026-11-20
 author: Milos
 tags: [claude]
 ---
@@ -22,11 +22,15 @@ Three rules cover most situations:
 >
 > Effort controls how much a model spends, not how careful it is. On real code, raising Opus above Medium made it break more existing tests.
 
+Prefer a video? Ben AI covers the same ground:
+
+{% include video.html id="_ioUbQftxBc" title="Anthropic's Simple Cheat Sheet for Picking Claude Models + Effort" %}
+
 ---
 
 ## Which model and effort to use
 
-Pick by the kind of task first, then by how much the result can be checked. "Extra" is the name Claude Code's `/effort` slider uses for the API's xhigh level.
+Pick by the kind of task first, then by how much the result can be checked. Fable isn't in the table because our Team plan doesn't include it unless you pay for its usage costs. "Extra" is the name Claude Code's `/effort` slider uses for the API's xhigh level.
 
 | Situation | Model and effort | Why |
 |---|---|---|
@@ -35,10 +39,36 @@ Pick by the kind of task first, then by how much the result can be checked. "Ext
 | Change with many edge cases in existing code | {% include badge.html m="opus" %} Opus 5.5, Medium | At Low, Opus solved one edge-case-heavy change once in three runs, against three at Medium |
 | Architecture, unfamiliar repository, ambiguous requirements | {% include badge.html m="opus" %} Opus 5.5, Medium, then step up only if it falls short | Anthropic positions Opus for complex work requiring careful judgment |
 | Long build from scratch (30+ minutes) | {% include badge.html m="opus" %} Opus 5.5, Extra | Two build-from-scratch tests found Extra best; Max roughly doubled cost and time for a worse result |
-| A Medium run fails its tests | Don't raise effort: split the task into smaller steps or add context, then rerun at Medium | Sonnet's only gain at Max came from edge cases, at 35x the Medium price; narrower tasks and better context are the cheaper fix |
-| High-volume triage or latency-sensitive chat | {% include badge.html m="sonnet" %} Sonnet 5.5, Low | Speed and price matter most, and output is easy to check |
+| A Medium run falls short | Follow the steps in [When the output isn't good enough](#when-the-output-isnt-good-enough) | Sonnet's only gain at Max came from edge cases, at 35x the Medium price. A better prompt and a narrower task cost less |
+| High-volume classification, routing or summarization | {% include badge.html m="haiku" %} Haiku 5.5 | Far cheaper and faster, and nearly as good on simple work. In Anthropic's tests Haiku 5.5 scored 85% on a hard science quiz against 91% for Opus, at about a twentieth of the cost per correct answer. It is weak at judgment calls, so keep it away from work where it has to decide |
+| Latency-sensitive chat | {% include badge.html m="sonnet" %} Sonnet 5.5, Low | Speed matters most and the output is easy to check |
+| Back-and-forth work where you want to steer each step | Opus or Sonnet, Low | Low keeps you in the loop because it asks instead of deciding for you. Simple jobs gain nothing from more effort: in one Anthropic test the same redesign took 1 minute at Low and 28 minutes at Max, with a similar result |
 
-Two habits sit underneath the table. First, add a test or a review step to catch dropped instructions, because more effort made that failure more likely, not less. Second, in Claude Code the `opusplan` alias uses Opus for planning and Sonnet for execution. Each plan-mode toggle counts as a model switch that starts a fresh cache, so it suits work with few toggles.
+Two habits sit underneath the table. First, add a test or a review step to catch dropped instructions, because more effort made that failure more likely, not less. Second, pick the model once per chat. To plan with Opus and build with Sonnet, write a handoff document when planning ends and start a new chat on Sonnet. Each model has its own cache, so changing the model in the same chat makes it reread the whole conversation.
+
+---
+
+## Picking an effort level
+
+Effort sets how much Claude does on its own. At higher levels it reads more, tests more and makes more decisions for you, which takes longer and costs more on any model. It can't add knowledge the model lacks, so Sonnet at Max still doesn't know what Opus knows. Work through these questions in order and stop at the first yes:
+
+1. **Will you go back and forth with Claude, or is it a simple task?** Low.
+2. **Do you want Claude to review documents, or check a lot of things?** High, because it double-checks more. Otherwise avoid it. Use High only when you want Claude to put up a sweat against a problem.
+3. **Is it a long, hard, critical job that you'll hand off and walk away from?** Extra, and only when all three of those are true, because at that level Claude makes every decision itself and can run for hours. Skip Max.
+4. **Anything else:** Medium, the default.
+
+Effort doesn't replace the basics. Write a good prompt, describe the work well, and run `grill-me` first when you're unsure what you want to build.
+
+---
+
+## When the output isn't good enough
+
+Before changing anything, ask whether Claude lacked knowledge or didn't try hard enough. Missing knowledge calls for a bigger model. Skipped steps call for more effort. Then work down these steps and stop when the output is good:
+
+1. **Fix the prompt.** More effort can't rescue a bad prompt. Run `/rewind` (or press Escape twice) to edit an earlier prompt and restart from there, which also undoes the file changes after that point. That is usually faster than iterating on a misaligned chat. If the task is big, split it into smaller steps.
+2. **Let Claude check its own work.** Give it a reference to compare against, a list of things that must be true, or tests to run. References and examples are among the most effective ways to align the output.
+3. **Raise effort by one level**, for example Opus from Medium to High. That is a smaller step than changing the model. Our monorepo test found Opus above Medium broke more existing tests, so in existing code do steps 1 and 2 first.
+4. **Move to a bigger model at a lower effort level.** If Opus at High still falls short, Fable would start at Medium, because past High one more effort level can cost as much as a bigger model. Ask Claude for a handoff document and start a new chat on the bigger model (see [AI Workflows](ai-workflows.html)) instead of changing the model in the same chat. Fable isn't on our plan, so for us this step mostly means moving from Sonnet to Opus.
 
 ---
 
@@ -109,7 +139,7 @@ Changing effort partway through a conversation can throw away the prompt cache, 
 | Claude API, per-message effort (beta) | Preserves the cache on Opus 5.5, Opus 5 and Sonnet 5.5. It needs the beta header `mid-conversation-output-config-2026-07-01`. It is not available with Sonnet's `between_tools` thinking mode, which returns a 400 error if effort differs. | Use this when one conversation needs different effort per turn |
 | Claude Code, `/effort` | On Opus 5.5 and Sonnet 5.5 with an API key or a Claude subscription, changing effort keeps the cache and applies without a prompt. On other models, and on Amazon Bedrock, Google Cloud's Agent Platform or a Claude apps gateway, it restarts the cache, and Claude Code asks you to confirm while the cache is warm. | Change effort freely on the 5.5 models; elsewhere, set it at the start of a session |
 
-Model switches are different: each model has its own cache, so a `/model` switch rereads the whole conversation with no cache hits, and the cost applies once per switch. Pick the model at the start of a session. Two GitHub issues from earlier Claude Code versions report conflicting cache behavior on effort changes; the current documentation above supersedes them.
+Models behave differently: each has its own cache, so changing the model in the same chat rereads the whole conversation with no cache hits. Going down a tier also loses the earlier reasoning, because a smaller model can't read a bigger model's thinking. Pick the model at the start of a chat and use a handoff document and a new chat to move to another one (see [AI Workflows](ai-workflows.html)). Two GitHub issues from earlier Claude Code versions report conflicting cache behavior on effort changes; the current documentation above supersedes them.
 
 If only one turn needs more thinking, Claude Code's `ultrathink` keyword raises effort for a single prompt. This document does not cover how the claude.ai apps handle the cache.
 
@@ -145,10 +175,11 @@ Figures are as of the update date at the top. Two pages were read in full; the r
 | [Introducing Claude Sonnet 5.5 (Anthropic)](https://www.anthropic.com/claude-sonnet-5-5) | Positioning, Low and Medium cost claims | Excerpt |
 | [Prompting Claude Opus 5.5 (Claude Platform Docs)](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) | Opus 5.5 effort calibration | Excerpt |
 | [Steering thinking (Claude Platform Docs)](https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost) | Medium-to-Low cache miss example | Excerpt |
-| [How Claude Code uses prompt caching](https://code.claude.com/docs/en/prompt-caching) | Effort and model switching, other cache-invalidating actions | In full |
+| [How Claude Code uses prompt caching](https://code.claude.com/docs/en/prompt-caching) | Effort and model changes, other cache-invalidating actions | In full |
 | [Claude Code issue 63962](https://github.com/anthropics/claude-code/issues/63962) and [issue 61984](https://github.com/anthropics/claude-code/issues/61984) | Conflicting reports on cache behavior | Excerpt |
 | [Sonnet 5.5 vs Opus 5.5 (emergent.sh)](https://emergent.sh/learn/sonnet-5-5-vs-opus-5-5) | Artificial Analysis index scores and cost per task | Excerpt |
 | [Sonnet 5.5 vs Opus 5.5 (myclaw.ai)](https://myclaw.ai/blog/sonnet-5-5-vs-opus-5-5) | FrontierCode figures as reported by Anthropic | Excerpt |
 | [Opus 5.5 best practices (claudefa.st)](https://claudefa.st/blog/guide/development/opus-5-5-best-practices) | Opus Medium default, Claude Code Max warning | Excerpt |
 | [Opus 5.5 at every effort level (openclawdatabase.com)](https://openclawdatabase.com/news/videos/2026-09-24-opus-55-every-effort-level-cost-comparison/) | Build-from-scratch test, Max cost and time | Excerpt |
 | [Opus 5.5 built the same app 6 times (AI Fire)](https://www.aifire.co/p/claude-opus-5-5-built-the-same-app-6-times-and-extra-won) | Build-from-scratch test, Extra naming | Excerpt |
+| [Anthropic's Simple Cheat Sheet for Picking Claude Models + Effort (Ben AI, YouTube)](https://www.youtube.com/watch?v=_ioUbQftxBc) | Haiku and effort guidance, the escalation steps, thinking lost when moving down a model | Full transcript |

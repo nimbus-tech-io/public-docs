@@ -2,7 +2,7 @@
 layout: doc
 title: "Saving Tokens in Claude Code: A Practical Guide"
 subtitle: Habits that keep your context small, your cache warm, and your usage down.
-updated: 2026-10-07
+updated: 2026-11-20
 author: Milos
 tags: [claude]
 ---
@@ -14,7 +14,7 @@ Most wasted tokens in Claude Code come from three things: context that grows lar
 The habits that save the most:
 
 1. **Clear between unrelated tasks.** Use `/clear` when the work changes. Stale context costs tokens on every later message.
-2. **Choose model and effort at the start of a session.** Switching models mid-task throws away the cache.
+2. **Choose model and effort at the start of a session.** To use another model, write a handoff document and start a new chat on it.
 3. **Write specific prompts.** Name the file and the change, and say how Claude can check its own work.
 4. **Plan before big changes.** Plan mode and early course-corrections prevent expensive rework.
 5. **Keep CLAUDE.md short.** It loads at the start of every session, so aim for under 200 lines.
@@ -31,9 +31,8 @@ Prompt caching lets Claude Code re-read your unchanged history at a fraction of 
 
 | Action | What happens | What to do instead |
 |---|---|---|
-| Switch models with `/model` | Each model has its own cache, so the next request rereads the whole history with no cache hits | Pick the model at the start, or switch right after `/clear` when there is little history to reread |
-| Toggle plan mode under `opusplan` | Every toggle is a model switch | Use `opusplan` only for work with few toggles |
-| Run a skill or command that names another model | That turn is a model switch | Check the skill's frontmatter before using it mid-task |
+| Change the model in the same chat (`/model`) | Each model has its own cache, so the next request rereads the whole history with no cache hits. Going down a tier also loses the earlier thinking, because a smaller model can't read a bigger model's reasoning | Write a handoff document and start a new chat on the other model |
+| Run a skill that sets `model:` in its frontmatter, in the main chat, without a subagent | That turn is a model change, so it rereads the whole history | Have the skill spawn a subagent to do the work. It matters little at about 5 to 15% of your context, when there is little history to reread |
 | Turn on fast mode mid-session | A request header that is part of the cache key changes, so the next request rereads everything at fast mode rates | Turn it on at the start of a session |
 | Change effort | On Opus 5.5, Sonnet 5.5 and Fable 5.1 with an API key or Claude subscription, the cache is kept. On other models and some providers it restarts | Check which case applies to you before changing it mid-task |
 | Connect or remove an MCP server, or deny a whole tool | Invalidates the cache only when tool definitions load upfront; with tool search deferring tools, which is the default on supported models, it does not | Leave tool search on |
@@ -58,7 +57,8 @@ Which model and effort level suits which kind of task, and the test results behi
 
 One more point matters for token use:
 
-- **Subagents inherit your model.** A switch to Opus also applies to subagents that inherit the session's model. For simple subagent work, set `model: haiku` in the subagent's configuration.
+- **Subagents inherit your model.** Opus in the session means Opus in every subagent that inherits it, and subagents can use up to 90% of a chat's tokens. Give read-only ones a smaller model: set `model: sonnet` or `model: haiku` in the subagent's configuration, or tell Claude in your prompt or CLAUDE.md to run read-only subagents on Sonnet. In Anthropic's own test, an Opus lead with up to 25 Sonnet subagents cost about a third less than Opus working alone and scored about the same.
+- **Skills with a fixed workflow can run on Sonnet.** Set `model: sonnet` in the skill's frontmatter. To avoid a cache rebuild, write the skill so it spawns a subagent to do the work, especially if you'll run it in the middle of a long session. At the start of a session, or at 5 to 15% of your context, running it directly costs little.
 
 Anthropic's cost guidance is simple: Sonnet handles most coding tasks and costs less than Opus, so reserve Opus for complex architectural decisions and multi-step reasoning. Agent teams add a multiplier. Anthropic reports about 7 times the tokens of a standard session when teammates run in plan mode, so keep teams small, use Sonnet for teammates, and shut them down when their work is done.
 
@@ -154,7 +154,7 @@ Three pages were read in full and two as search-result excerpts. Features and ve
 | Source | Used for | Read |
 |---|---|---|
 | [Manage costs effectively (Claude Code docs)](https://code.claude.com/docs/en/costs) | Reduce-token-usage advice, `/usage` fields, idle-time costs, the $13 and $30 figures | In full |
-| [How Claude Code uses prompt caching (Claude Code docs)](https://code.claude.com/docs/en/prompt-caching) | Cache-invalidating actions, TTL by plan, model and effort switching | In full |
+| [How Claude Code uses prompt caching (Claude Code docs)](https://code.claude.com/docs/en/prompt-caching) | Cache-invalidating actions, TTL by plan, model and effort changes | In full |
 | [The Default Was Right (paddo.dev)](https://paddo.dev/blog/default-was-right/) | The 300-run test: cost by effort level, regressions, the Opus Max comparison | In full |
 | [Opus 5.5 built the same app 6 times (AI Fire)](https://www.aifire.co/p/claude-opus-5-5-built-the-same-app-6-times-and-extra-won) | Build-from-scratch test where Extra gave the best balance | Excerpt |
 | [Opus 5.5 at every effort level (openclawdatabase.com)](https://openclawdatabase.com/news/videos/2026-09-24-opus-55-every-effort-level-cost-comparison/) | Build-from-scratch test where Max cost about double Extra | Excerpt |
