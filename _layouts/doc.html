@@ -9,6 +9,11 @@
   </head>
   <body>
     <div class="page">
+      {% unless page.url == "/" or page.url == "/index.html" %}
+      <div class="breadcrumb">
+        <a href="{{ '/' | relative_url }}">Nimbus Tech Docs</a><span>/</span>{{ page.title }}
+      </div>
+      {% endunless %}
       <h1>{{ page.title }}</h1>
       {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
       {% if page.author or page.updated %}
